@@ -1,0 +1,33 @@
+# Ignore the following directories:
+[Ll]ibrary/
+[Tt]emp/
+Obj/
+Build/
+Builds/
+[Ll]ogs/
+
+# Ignore the following files:
+*.user
+*.userprefs
+*.pidb
+*.suo
+*.swp
+*.bak
+*.tmp
+*.vscode/
+
+# User-specific files
+*.prefs
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# OSX Finder
+.DS_Store
+
+# Windows Installer files
+Thumbs.db
+ehthumbs.db
