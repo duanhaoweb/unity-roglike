@@ -503,7 +503,7 @@ PrefabInstance:
     - target: {fileID: 7431050454449949764, guid: 261d40b1dcf78254ba0f783d066b73df,
         type: 3}
       propertyPath: m_Name
-      value: Wall (1)
+      value: Wall_Right
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -677,7 +677,7 @@ PrefabInstance:
     - target: {fileID: 7431050454449949764, guid: 261d40b1dcf78254ba0f783d066b73df,
         type: 3}
       propertyPath: m_Name
-      value: Wall
+      value: Wall_Left
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

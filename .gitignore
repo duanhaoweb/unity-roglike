@@ -5,6 +5,7 @@ Obj/
 Build/
 Builds/
 [Ll]ogs/
+.vs/
 
 # Ignore the following files:
 *.user
