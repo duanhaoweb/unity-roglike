@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.UI;
 //¿ªÊ¼Ò³Ãæ£¨¼Ì³ÐUIBase£©
 public class LoginUI : UIBase
 {

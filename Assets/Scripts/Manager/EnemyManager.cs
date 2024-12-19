@@ -17,7 +17,7 @@ public class EnemyManager
     {
         enemyList = new List<Enemy>();
         //Id	Name	EnemyIds	Pos
-        //10001	1	10001	"0,0,0"
+        //10001	  1	     10001	  0,0,0
         //读取关卡表
         Dictionary<string,string> levelData =GameConfigManager.Instance.GetLevlById(id);
         //敌人id信息

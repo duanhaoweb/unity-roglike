@@ -21,6 +21,23 @@ public class FightManager : MonoBehaviour
     public static FightManager Instance;
     public FightUnit fightUnit; // 战斗单元
 
+    public int MaxHP;//最大血量
+    public int CurrentHP;//当前血量
+
+    public int MaxPowerCount;//最大卡牌费用（能量）
+    public int CurrentPowerCount;//当前能量
+
+    public int DenfenseCount;//盾（护甲）值
+
+    public void Init()
+    {
+        MaxHP = 10;  
+        CurrentHP = 10;
+        MaxPowerCount= 3;
+        CurrentPowerCount = 3;
+        DenfenseCount = 0;
+        
+    }
     private void Awake()
     {
         Instance = this;

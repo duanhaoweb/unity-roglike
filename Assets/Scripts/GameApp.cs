@@ -18,7 +18,7 @@ public class GameApp : MonoBehaviour
 
         //显示loginUI,创建的脚本名字记得跟预制体物体的名字一样
         UIManager.Instance.ShowUI<LoginUI>("LoginUI");
-
+        
         //播放BGM
         AudioManager.Instance.PlayBGM("Start");
         //test

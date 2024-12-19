@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
+using UnityEngine.UI;
 // UI页面管理器
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    private Transform canvasTf; // 画布的变换组件
+    public Transform canvasTf; // 画布的变换组件
     private List<UIBase> uiList; // 存储加载过的页面
 
     private void Awake()
@@ -82,5 +83,45 @@ public class UIManager : MonoBehaviour
             }
         }
         return null;
+    }
+    //创建敌人头部的行动图标物体
+    public GameObject CreatActionIcon()
+    {
+        GameObject obj = Instantiate(Resources.Load("UI/actionIcon"), canvasTf) as GameObject;
+        obj.transform.SetAsLastSibling();//设置在父级的最后一位
+        return obj;
+    }
+    //创建敌人底部的血量显示
+    public GameObject CreatHpItem()
+    {
+        GameObject obj = Instantiate(Resources.Load("UI/HpItem"), canvasTf) as GameObject;
+
+
+        obj.transform.SetAsLastSibling();//设置在父级的最后一位
+        return obj;
+    }
+    //创建提示页面
+    public void ShowTip(string msg,Color color,System.Action callback =null)
+    {
+        GameObject obj =Instantiate(Resources.Load("UI/Tips"), canvasTf) as GameObject;
+        Text text=obj.transform.Find("bg/Text").GetComponent<Text>();
+        text.color=color;
+
+        text.text = msg;
+        Tween scalel = obj.transform.Find("bg").DOScale(1,0.2f);
+        Tween scale2= obj.transform.Find("bg").DOScale(1, 0.2f);
+        Sequence seq = DOTween.Sequence();
+        seq.Append(scalel);
+        seq.AppendInterval(0.5f);
+        seq.Append(scale2);
+        seq.AppendCallback(delegate ()
+        {
+            if (callback != null)
+                callback();
+
+
+        }
+        );
+        MonoBehaviour.Destroy(obj,1);
     }
 }

@@ -7,6 +7,12 @@ public class Fight_PlayerTurn: FightUnit
     public override void Init()
     {
         base.Init();
+        Debug.Log("playeTime");
+        UIManager.Instance.ShowTip("ÕÊº“ªÿ∫œ",Color.green,delegate()
+        {
+            //≥È≈∆
+            Debug.Log("≥È≈∆");
+        });
     }
     public override void OnUpdate()
     {
