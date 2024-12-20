@@ -84,6 +84,16 @@ public class UIManager : MonoBehaviour
         }
         return null;
     }
+    //获得某个界面的脚本
+    public T GetUI<T>(string uiName) where T : UIBase
+    {
+        UIBase ui = Find(uiName);
+        if(ui != null)
+        {
+            return ui.GetComponent<T>();
+        }
+        return null;
+    }
     //创建敌人头部的行动图标物体
     public GameObject CreatActionIcon()
     {

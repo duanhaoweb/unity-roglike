@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+
 
 //战斗页面
 public class FightUI : UIBase
@@ -13,8 +16,10 @@ public class FightUI : UIBase
     private Text hpTxT;
     private Image hpImg;
     private Text defenseTxT;
+    private List<CardItem> CardItemList; //卡牌实体集合
     private void Awake()
     {
+        CardItemList = new List<CardItem>();
         cardCountTxT = transform.Find("hasCard/icon/Text").GetComponent<Text>();
         usedCardCountTxT = transform.Find("noCard/icon/Text").GetComponent<Text>();
         powerTxT = transform.Find("mana/Text").GetComponent<Text>();
@@ -57,5 +62,38 @@ public class FightUI : UIBase
     public void UpdateUsedCardCount()
     {
         usedCardCountTxT.text=FightCardManager.Instance.usedcardList.Count.ToString();
+    }
+
+    public void CreateCardItem(int count)
+    {
+        if(count>FightCardManager.Instance.cardList.Count)
+        {
+            count = FightCardManager.Instance.cardList.Count;
+        }
+        for(int i = 0; i < count; i++)
+        {
+            GameObject cardItem = Instantiate(Resources.Load("UI/CardItem"),transform)as GameObject;
+            cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-807, -358);//位置数据可调
+            var item = cardItem.AddComponent<CardItem>();
+            string cardId = FightCardManager.Instance.DrawCard();
+            Dictionary<string,string> data = GameConfigManager.Instance.GetCardById(cardId);
+            item.Init(data);
+            CardItemList.Add(item);
+        }
+    }
+
+    public void UpdateCardItemPos()
+    {
+        float offset = 1300.0f/CardItemList.Count;
+        Vector2 pos = new Vector2(-CardItemList.Count / 2.0f * offset + offset * 0.5f, -358);
+        for(int i = 0;i < CardItemList.Count;i++)
+        {
+            CardItemList[i].GetComponent<RectTransform>().DOAnchorPos(pos,0.5f);
+            pos.x = pos.x+offset;
+        }
+    }
+    public void RemoveCard(CardItem cardItem)
+    {
+        
     }
 }

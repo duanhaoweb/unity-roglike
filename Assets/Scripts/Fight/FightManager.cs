@@ -28,7 +28,7 @@ public class FightManager : MonoBehaviour
     public int CurrentPowerCount;//当前能量
 
     public int DenfenseCount;//盾（护甲）值
-
+    public int ATKBuff;//增伤值
     public void Init()
     {
         MaxHP = 10;  
