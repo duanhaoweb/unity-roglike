@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
-public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
+public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,IBeginDragHandler,IDragHandler,IEndDragHandler
 {
     public Dictionary<string, string> data;//卡牌信息
     private int index;
@@ -21,27 +21,17 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         transform.Find("bg/nameTxt").GetComponent<Text>().text = data["Name"];
         transform.Find("bg/useTxt").GetComponent<Text>().text = data["Expend"];
         transform.Find("bg/Text").GetComponent<Text>().text = GameConfigManager.Instance.GetCardTypeById(data["Type"])["Name"];
-    }
-    public virtual void OnEndDrag(PointerEventData eventData)
-    {
 
     }
-
-
-
-
-
-
-
-
+   
     public virtual bool UseCard()
     {
         int cost = int.Parse(data["Expend"]);
         if (cost > FightManager.Instance.CurrentPowerCount)
         {
             //费用不足
-
-            Debug.Log("费用不足");
+            AudioManager.Instance.PlayEffect("UseCardFail");
+            UIManager.Instance.ShowTip("费用不足",Color.red);
             return false;
         }
         else
@@ -49,20 +39,20 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
             //扣费
             FightManager.Instance.CurrentPowerCount -= cost;
             //刷新费用文本
+            UIManager.Instance.GetUI<FightUI>("FightUI").UpdatePower();
+            UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(this);
+            
             if (this is ItemCard)
             {
                 (this as ItemCard).dur--;
+               
                 if ((this as ItemCard).dur <= 0)
                 {
-                    UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(this);
+                    UIManager.Instance.GetUI<FightUI>("FightUI").DeleteCardItem(this);
+                    //耐久为0直接删除该物品
                 }
             }
-            else
-            {
-
-                //删除用过的卡牌
-                UIManager.Instance.GetUI<FightUI>("FightUI").RemoveCard(this);
-            }
+            
 
             return true;
         }
@@ -73,12 +63,14 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     public void CardEffect(Vector3 pos)
     {
         GameObject effect = Instantiate(Resources.Load(data["Effects"]))as GameObject;
+        effect.transform.position = pos;
         Destroy(effect, 2);
     }
     //鼠标进入
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.DOScale(1, 0.25f);
+        transform.DOScale(0.85f, 0.25f);
+        transform.DOMoveY(200, 0.25f);
         index = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
     }
@@ -86,6 +78,38 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     public void OnPointerExit(PointerEventData eventData)
     {
         transform.DOScale(0.602f, 0.25f);
+        transform.DOMoveY(65, 0.25f);
         transform.SetSiblingIndex(index);
     }
+    Vector2 initPos;//拖拽时记录卡牌位置
+    
+    public virtual void OnBeginDrag(PointerEventData eventData)
+    {
+        initPos = transform.GetComponent<RectTransform>().anchoredPosition;
+        
+            AudioManager.Instance.PlayEffect ("CardClick"); 
+        
+        
+    }
+    public virtual  void OnDrag(PointerEventData eventData)
+    {
+        Vector2 pos;
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            transform.parent.GetComponent<RectTransform>(),
+            eventData.position,
+            eventData.pressEventCamera,
+            out pos
+            ))
+        {
+            transform.GetComponent<RectTransform>().anchoredPosition = pos;
+        }
+    }
+    public virtual void OnEndDrag(PointerEventData eventData)
+    {
+        transform.GetComponent<RectTransform>().anchoredPosition=initPos;
+        transform.SetSiblingIndex(index);
+        
+    }
+
+    
 }

@@ -843,6 +843,7 @@ MonoBehaviour:
   MaxPowerCount: 0
   CurrentPowerCount: 0
   DenfenseCount: 0
+  ATKBuff: 0
 --- !u!1 &2141848222
 GameObject:
   m_ObjectHideFlags: 0

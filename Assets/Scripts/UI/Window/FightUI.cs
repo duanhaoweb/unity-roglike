@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using static UnityEditor.PlayerSettings;
 
 
 //战斗页面
@@ -63,29 +64,51 @@ public class FightUI : UIBase
     {
         usedCardCountTxT.text=FightCardManager.Instance.usedcardList.Count.ToString();
     }
-
-    public void CreateCardItem(int count)
+    public void CreateCardItem()
     {
-        if(count>FightCardManager.Instance.cardList.Count)
+        //预先创建好卡牌实体 放在镜头外
+        for (int i = FightCardManager.Instance.cardList.Count - 1; i >= 0; i--)
+        {
+            GameObject cardItem = Instantiate(Resources.Load("UI/CardItem"), transform) as GameObject;
+            cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2000, -2000);//位置数据可调
+            
+
+            Dictionary<string, string> data = GameConfigManager.Instance.GetCardById(FightCardManager.Instance.cardList[i]);
+            CardItem item = cardItem.AddComponent(System.Type.GetType(data["Script"]))as CardItem;
+            item.Init(data);
+            FightCardManager.Instance.cardItemList.Add(item);
+        }
+    }
+
+    public void DrawCardItem(int count)
+    {
+        if (count > FightCardManager.Instance.cardList.Count)
         {
             count = FightCardManager.Instance.cardList.Count;
         }
-        for(int i = 0; i < count; i++)
+        Vector2 pos = new Vector2(-807,-520);
+        for (int i = count-1; i >=0; i--)
         {
-            GameObject cardItem = Instantiate(Resources.Load("UI/CardItem"),transform)as GameObject;
-            cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-807, -358);//位置数据可调
-            var item = cardItem.AddComponent<CardItem>();
-            string cardId = FightCardManager.Instance.DrawCard();
-            Dictionary<string,string> data = GameConfigManager.Instance.GetCardById(cardId);
-            item.Init(data);
-            CardItemList.Add(item);
+            FightCardManager.Instance.cardItemList[i].GetComponent<RectTransform>().DOAnchorPos(pos,0.5f);
+            CardItemList.Add(FightCardManager.Instance.cardItemList[i]);
+            FightCardManager.Instance.cardList.RemoveAt(i);
+            FightCardManager.Instance.cardItemList.RemoveAt(i);
+            UpdateCardCount();
+            //GameObject cardItem = Instantiate(Resources.Load("UI/CardItem"), transform) as GameObject;
+            //cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-800, -300);//位置数据可调
+            //var item = cardItem.AddComponent<CardItem>();
+            //string id = FightCardManager.Instance.DrawCard();
+            //Dictionary<string, string> data = GameConfigManager.Instance.GetCardById(id);
+
+            //item.Init(data);
+            //CardItemList.Add(item);
         }
     }
 
     public void UpdateCardItemPos()
     {
-        float offset = 1300.0f/CardItemList.Count;
-        Vector2 pos = new Vector2(-CardItemList.Count / 2.0f * offset + offset * 0.5f, -358);
+        float offset = 1000.0f/CardItemList.Count;
+        Vector2 pos = new Vector2(-CardItemList.Count / 2.0f * offset + offset * 0.5f, -520);
         for(int i = 0;i < CardItemList.Count;i++)
         {
             CardItemList[i].GetComponent<RectTransform>().DOAnchorPos(pos,0.5f);
@@ -94,6 +117,28 @@ public class FightUI : UIBase
     }
     public void RemoveCard(CardItem cardItem)
     {
+        AudioManager.Instance.PlayEffect("Use");
+
+        //cardItem.enabled = false;
+
+        FightCardManager.Instance.usedcardList.Add(cardItem.data["Id"]);
+        FightCardManager.Instance.usedcarditem.Add(cardItem);
+        Vector2 pos = new Vector2(-2000, -2000);
         
+        CardItemList.Remove(cardItem);
+        usedCardCountTxT.text = FightCardManager.Instance.usedcardList.Count.ToString();
+        UpdateCardCount();
+        //刷新卡牌位置
+        UpdateCardItemPos();
+
+        //卡牌移到弃牌堆效果
+        cardItem.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-143,126), 0.5f);
+        cardItem.transform.DOScale(0, 0.5f);
+        cardItem.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-2000, -2000), 0.5f);
+        
+    }
+    public void DeleteCardItem(CardItem cardItem)
+    {
+        Destroy(cardItem.gameObject,1);
     }
 }

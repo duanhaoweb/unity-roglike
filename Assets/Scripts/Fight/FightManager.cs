@@ -29,6 +29,7 @@ public class FightManager : MonoBehaviour
 
     public int DenfenseCount;//盾（护甲）值
     public int ATKBuff;//增伤值
+    
     public void Init()
     {
         MaxHP = 10;  
@@ -36,6 +37,7 @@ public class FightManager : MonoBehaviour
         MaxPowerCount= 3;
         CurrentPowerCount = 3;
         DenfenseCount = 0;
+        ATKBuff = 0;
         
     }
     private void Awake()

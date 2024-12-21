@@ -44,4 +44,8 @@ public class EnemyManager
             obj.transform.position = new Vector3(x, y, z);
         }
     }
+    public void DeleteEnemy(Enemy enemy)
+    {
+        enemyList.Remove(enemy);
+    }
 }

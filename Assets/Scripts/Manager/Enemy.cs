@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +35,8 @@ public class Enemy : MonoBehaviour
     public int MaxHp;
     public int CurrentHp;
 
+    //组件相关
+    SkinnedMeshRenderer _meshRenderer;
 
     public void Init(Dictionary<string,string>data)
     {
@@ -41,6 +44,7 @@ public class Enemy : MonoBehaviour
     }
     void Start()
     {
+        //_meshRenderer=transform.GetComponentInChildren<SkinnedMeshRenderer>();
         type = ActionType.None;
         hpItemObj = UIManager.Instance.CreatHpItem();
 
@@ -97,5 +101,47 @@ public class Enemy : MonoBehaviour
     public void UpdateDefend()
     {
         defendTxt.text=Defend.ToString();
+    }
+    public void OnSelect()
+    {
+        this.transform.DOScale(1.7f, 0.25f);
+    }
+    public void OnUnSelect()
+    {
+        this.transform.DOScale(1.3f, 0.25f);
+    }
+    public void Hit(int val)
+    {
+        if (Defend >= val)
+        {
+            Defend-=val;
+            //播放动画及音效
+        }
+        else
+        {
+            val = val - Defend;
+            Defend = 0;
+            CurrentHp -= val;
+            if(CurrentHp < 0)
+            {
+                CurrentHp = 0;
+                //播放死亡
+                //敌人移除
+                EnemyManager.Instance.DeleteEnemy(this);
+
+                Destroy(gameObject, 1);
+                Destroy(actionObj);
+                Destroy(hpItemObj);
+            }
+            else
+            {
+                //受伤
+            }
+
+        }
+        //刷新血量
+        UpdateDefend();
+        UpdateHp();
+        
     }
 }

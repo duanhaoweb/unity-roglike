@@ -15,7 +15,8 @@ public class RoleManager
         Player player = obj.AddComponent<Player>();//添加敌人脚本
 
         obj.transform.position = new Vector3(-5, 1, -6);
-        //添加初始卡牌
+        //添加初始行动卡牌
+        
         int AttackCardCount = 4;
         int DenfenseCardCount = 4;
         int DealCardCount = 2;

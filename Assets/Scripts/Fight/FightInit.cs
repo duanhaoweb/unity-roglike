@@ -18,10 +18,15 @@ public class FightInit : FightUnit
 
         //初始化战斗卡牌
         FightCardManager.Instance.Init();
+        
 
         // 显示战斗页面
         Debug.Log("显示战斗页面：加载 'FightUI'");
         UIManager.Instance.ShowUI<FightUI>("FightUI");
+        //实例化战斗卡牌
+        UIManager.Instance.GetUI<FightUI>("FightUI").CreateCardItem();
+        
+        //实例化物品卡牌
         //切换到玩家回合
         FightManager.Instance.ChangeType(FightType.Player);
     }

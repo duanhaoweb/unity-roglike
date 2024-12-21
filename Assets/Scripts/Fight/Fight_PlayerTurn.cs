@@ -10,9 +10,12 @@ public class Fight_PlayerTurn: FightUnit
         Debug.Log("playeTime");
         UIManager.Instance.ShowTip("玩家回合",Color.green,delegate()
         {
+
+            
+
             //抽牌
             Debug.Log("抽牌");
-            UIManager.Instance.GetUI<FightUI>("FightUI").CreateCardItem(4);//抽四张牌
+            UIManager.Instance.GetUI<FightUI>("FightUI").DrawCardItem(6);//抽6张牌
             UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardItemPos();
         });
     }
