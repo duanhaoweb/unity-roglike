@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class AttackCard : ActionCard, IPointerDownHandler
 {
-    private IEnumerator OnMouseDownRight(PointerEventData data)
+    IEnumerator OnMouseDownRight(PointerEventData data)
     {
         while(true)
         {
@@ -39,7 +39,7 @@ public class AttackCard : ActionCard, IPointerDownHandler
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit,10000,LayerMask.GetMask("Enemy")))
+        if(Physics.Raycast(ray, out hit,10000,LayerMask.GetMask("En")))
         {
             hitEnemy = hit.transform.GetComponent<Enemy>();
             hitEnemy.OnSelect();

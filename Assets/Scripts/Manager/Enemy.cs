@@ -112,6 +112,7 @@ public class Enemy : MonoBehaviour
     }
     public void Hit(int val)
     {
+        val += FightManager.Instance.ATKBuff;
         if (Defend >= val)
         {
             Defend-=val;
