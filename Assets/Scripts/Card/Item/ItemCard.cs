@@ -9,6 +9,8 @@ public class ItemCard : CardItem
     public ItemCard()
     {
         is_bringout = true;
-        int dur= int.Parse(data["Arg1"]);
+        dur = int.Parse(data["Arg1"]);
+
     }
+    
 }

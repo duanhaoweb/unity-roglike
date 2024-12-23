@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 using static UnityEditor.PlayerSettings;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 
 //战斗页面
@@ -80,6 +81,43 @@ public class FightUI : UIBase
             FightCardManager.Instance.cardItemList.Add(item);
         }
     }
+    public void UnitBag()
+    {
+        //初始化背包
+        for (int i = 1021; i>=1011; i--)
+        {
+            Debug.Log(i);
+
+            GameObject cardItem = Instantiate(Resources.Load("UI/CardItem"), transform) as GameObject;
+            cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2000, -2000);//位置数据可调
+            Dictionary<string, string> data = GameConfigManager.Instance.GetCardById(i.ToString());
+            Debug.Log(02);
+            ItemCard item = cardItem.AddComponent(System.Type.GetType(data["Script"])) as ItemCard;
+            Debug.Log(033);
+            
+            item.Init(data);
+            item.dur = int.Parse(data["Arg1"]);
+            Debug.Log(04);
+            RoleManager.Instance.BagList.Add(item);
+            Debug.Log(5555);
+        }
+        
+    }
+    public void CreateItemCard()
+    {
+        //预先创建好卡牌实体 放在镜头外
+        for (int i = RoleManager.Instance.BagList.Count - 1; i >= 0; i--)
+        {
+
+            RoleManager.Instance.BagList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(-3000, -3000);//位置数据可调
+
+
+            
+            FightCardManager.Instance.cardItemList.Add(RoleManager.Instance.BagList[i]);
+            FightCardManager.Instance.cardList.Add(RoleManager.Instance.BagList[i].data["Id"]);
+            RoleManager.Instance.BagList.RemoveAt(i);
+        }
+    }
 
     public void DrawCardItem(int count)
     {
@@ -88,6 +126,15 @@ public class FightUI : UIBase
             count = FightCardManager.Instance.cardList.Count;
         }
         Vector2 pos = new Vector2(-807,-520);
+        // Fisher-Yates 洗牌算法，将卡组中的牌打乱顺序后加入到抽牌堆
+        for (int i = FightCardManager.Instance.cardItemList.Count - 1; i >= 0; i--)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, i + 1);
+            // 交换当前元素和随机索引的元素
+            CardItem temp = FightCardManager.Instance.cardItemList[i];
+            FightCardManager.Instance.cardItemList[i] = FightCardManager.Instance.cardItemList[randomIndex];
+            FightCardManager.Instance.cardItemList[randomIndex] = temp;
+        }
         for (int i = count-1; i >=0; i--)
         {
             
@@ -141,7 +188,8 @@ public class FightUI : UIBase
         cardItem.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-143,126), 0.5f);
         cardItem.transform.DOScale(0, 0.5f);
         cardItem.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-2000, -2000), 0.5f);
-        
+        cardItem.transform.DOScale(0.602f, 0.5f);
+
     }
     public void DeleteCardItem(CardItem cardItem)
     {

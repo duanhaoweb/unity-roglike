@@ -25,8 +25,10 @@ public class FightInit : FightUnit
         UIManager.Instance.ShowUI<FightUI>("FightUI");
         //实例化战斗卡牌
         UIManager.Instance.GetUI<FightUI>("FightUI").CreateCardItem();
-        
+        //初始化背包
+        UIManager.Instance.GetUI<FightUI>("FightUI").UnitBag();
         //实例化物品卡牌
+        UIManager.Instance.GetUI<FightUI>("FightUI").CreateItemCard();
         //切换到玩家回合
         FightManager.Instance.ChangeType(FightType.Player);
     }

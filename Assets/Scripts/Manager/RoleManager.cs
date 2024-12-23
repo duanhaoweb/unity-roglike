@@ -8,6 +8,9 @@ public class RoleManager
 
     public List<string> cardList=new List<string>();
 
+    public List<CardItem> BagList = new List<CardItem>();
+    
+
     public void Init()
     {
         GameObject obj = Object.Instantiate(Resources.Load("Model/Player")) as GameObject;//从资源路径加载对应的敌人模型
@@ -15,6 +18,7 @@ public class RoleManager
         Player player = obj.AddComponent<Player>();//添加敌人脚本
 
         obj.transform.position = new Vector3(-5, 1, -6);
+        
         //添加初始行动卡牌
         
         int AttackCardCount = 5;
@@ -36,6 +40,7 @@ public class RoleManager
             cardList.Add(id.ToString());
         }
         
+
 
     }
 }

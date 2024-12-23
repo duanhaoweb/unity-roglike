@@ -26,6 +26,7 @@ public class FightCardManager:UIBase
         cardItemList = new List<CardItem>();
         usedcardList = new List<string>();
         usedcarditem = new List<CardItem>();
+        
 
         // 获取卡组并进行边界检查
         if (RoleManager.Instance == null || RoleManager.Instance.cardList == null || RoleManager.Instance.cardList.Count == 0)

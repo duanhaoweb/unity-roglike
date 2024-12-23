@@ -172,4 +172,47 @@ public class Enemy : MonoBehaviour
         UpdateHp();
         
     }
+    public void Hit(int val)
+    {
+        val += FightManager.Instance.ATKBuff;
+
+
+
+
+        if (Defend >= val)
+        {
+            Defend -= val;
+            //播放动画及音效
+            AudioManager.Instance.PlayEffect("Hurt");
+        }
+        else
+        {
+            val = val - Defend;
+            Defend = 0;
+            CurrentHp -= val;
+            if (CurrentHp < 0)
+            {
+                CurrentHp = 0;
+                //播放死亡
+                AudioManager.Instance.PlayEffect("Die");
+                //敌人移除
+                EnemyManager.Instance.DeleteEnemy(this);
+
+                Destroy(gameObject, 1);
+                Destroy(actionObj);
+                Destroy(hpItemObj);
+            }
+            else
+            {
+                //受伤
+                AudioManager.Instance.PlayEffect("Hurt");
+            }
+
+        }
+        
+        //刷新血量
+        UpdateDefend();
+        UpdateHp();
+
+    }
 }

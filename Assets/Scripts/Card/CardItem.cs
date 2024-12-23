@@ -11,6 +11,7 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,I
     public void Init(Dictionary<string,string> data)
     {
         this.data = data;
+        Debug.Log("success!!!!");
     }
 
     private void Start()
@@ -45,7 +46,9 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,I
             if (this is ItemCard)
             {
                 (this as ItemCard).dur--;
-               
+                
+                transform.Find("bg/msgTxt").GetComponent<Text>().text = string.Format(data["Des"], data["Arg0"], (this as ItemCard).dur);
+                
                 if ((this as ItemCard).dur <= 0)
                 {
                     UIManager.Instance.GetUI<FightUI>("FightUI").DeleteCardItem(this);
