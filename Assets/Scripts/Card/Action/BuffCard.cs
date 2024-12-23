@@ -15,19 +15,27 @@ public class BuffCard : ActionCard
         transform.Find("bg/Text").GetComponent<Text>().text = GameConfigManager.Instance.GetCardTypeById(data["Type"])["Name"];
 
     }
+    
+
     public override void OnEndDrag(PointerEventData eventData)
     {
-
         if (UseCard() == true)
         {
-            int buff = int.Parse(data["Arg1"]);//Arg1代表对自己的数值
-            if (int.Parse(data["Arg0"]) > 0)
-            {
-                //套用攻击卡所用的攻击函数，并在攻击完之后让buff归零
-            }
+            int buff = int.Parse(data["Arg0"]);
+            AudioManager.Instance.PlayEffect("Buff");
+
+
+
+
+
             FightManager.Instance.ATKBuff += buff;
             //播放音效
-            //刷新数值及文本
+            //刷新文本
+            //UIManager.Instance.GetUI<FightUI>("FightUI").UpdateDefense();
+
+            //Vector3 pos = Camera.main.transform.position;
+            //pos.y = 0;
+            UIManager.Instance.ShowTip("攻击伤害提升！", Color.cyan);
 
 
 

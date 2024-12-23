@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,44 +18,47 @@ public class AddCard : ActionCard
     }
     public override void OnEndDrag(PointerEventData eventData)
     {
-        if (UseCard() == true)
-        {
-            int num = int.Parse(data["Arg0"]);//arg0为抽卡数 arg1>0加盾，<0扣血
-            //int val = int.Parse(data["Arg1"]);
-            
-            
-                //判定卡堆是否有卡
-                if (FightCardManager.Instance.HasCard()==true)
-                {
-                //抽对应的卡，建立对应数量的卡牌对象
-                UIManager.Instance.GetUI<FightUI>("FightUI").DrawCardItem(num);
-                UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardItemPos();
-
-                //判定加盾还是扣血
-                //if (val>0)
-                //    {
-                //        FightManager.Instance.DenfenseCount += val;
-                //    }else if(val<0)
-                //    {
-                //        FightManager.Instance.CurrentHP -= val;
-                //        if(FightManager.Instance.CurrentHP < 0) FightManager.Instance.CurrentHP = 0;
-                //    }
-
-                AudioManager.Instance.PlayEffect("AddCard");
-
-                //播放音效
-                //刷新护甲及文本
-               
-
-                //Vector3 pos = Camera.main.transform.position;
-                //pos.y = 0;
-                UIManager.Instance.ShowTip("获得手牌！", Color.yellow);
-
-            }
-            else
+        
+            if (UseCard() == true)
             {
-                base.OnEndDrag(eventData);
-            }
+                int num = int.Parse(data["Arg0"]);//arg0为抽卡数 arg1>0加盾，<0扣血
+                int val = int.Parse(data["Arg1"]);
+                
+
+                //判定卡堆是否有卡
+                if (FightCardManager.Instance.HasCard() == true)
+                {
+                    //抽对应的卡，建立对应数量的卡牌对象
+                    UIManager.Instance.GetUI<FightUI>("FightUI").DrawCardItem(num);
+                    UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardItemPos();
+                    AudioManager.Instance.PlayEffect("AddCard");
+
+                    //播放音效
+                    //刷新护甲及文本
+
+                    UIManager.Instance.ShowTip("获得手牌！", Color.yellow);
+                    //判定加盾还是扣血
+                    if (val > 0)
+                    {
+                        FightManager.Instance.DenfenseCount += val;
+                        UIManager.Instance.ShowTip("获得护盾！", Color.blue);
+                    UIManager.Instance.GetUI<FightUI>("FightUI").UpdateDefense();
+
+                }
+                    else if (val < 0)
+                    {
+                        FightManager.Instance.CurrentHP += val;
+                        if (FightManager.Instance.CurrentHP < 0) FightManager.Instance.CurrentHP = 0;
+                        UIManager.Instance.ShowTip("受到伤害！", Color.red);
+                    UIManager.Instance.GetUI<FightUI>("FightUI").UpdateHp();
+                }
+
+                }
+                else
+                {
+                    base.OnEndDrag(eventData);
+                }
+            
 
         }
         else

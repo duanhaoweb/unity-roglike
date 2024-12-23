@@ -5,51 +5,48 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class AttackCard : ActionCard, IPointerDownHandler
+public class AttackCard : ActionCard//, IPointerDownHandler
 {
-    IEnumerator OnMouseDownRight(PointerEventData data)
-    {
-        while(true)
-        {
-            //若再次按下右键跳出循环
-            if(Input.GetMouseButtonDown(1))
-            {
-                break;
-            }
-            Vector2 pos;
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                transform.parent.GetComponent<RectTransform>(),
-                data.position,
-                data.pressEventCamera,
-                out pos
-                ))
-            {
-                //进行射线检测是否碰到怪物
-                CheckRayToEnemy();
-            }
+    //IEnumerator OnMouseDownRight(PointerEventData data)
+    //{
+    //    while(true)
+    //    {
+    //        //若再次按下右键跳出循环
+    //        if(Input.GetMouseButtonDown(1))
+    //        {
+    //            break;
+    //        }
+    //        Vector2 pos;
+    //        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+    //            transform.parent.GetComponent<RectTransform>(),
+    //            data.position,
+    //            data.pressEventCamera,
+    //            out pos
+    //            ))
+    //        {
+    //            //进行射线检测是否碰到怪物
+    //            CheckRayToEnemy();
+    //        }
 
-            yield return null;
-        }
-        //跳出循环后显示鼠标
-        Cursor.visible = true;
-    }
+    //        yield return null;
+    //    }
+    //    //跳出循环后显示鼠标
+    //    Cursor.visible = true;
+    //}
     Enemy hitEnemy;//被检测到的敌人
-    private void CheckRayToEnemy()
+    private bool CheckRayToEnemy()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+        bool isUse = false;
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit,10000,LayerMask.GetMask("En")))
+        Debug.DrawLine(ray.origin, ray.direction, Color.blue, 100);
+        if (Physics.Raycast(ray, out hit, 10000, LayerMask.GetMask("Enemy")))
         {
+            Debug.Log("探测到敌人");
             hitEnemy = hit.transform.GetComponent<Enemy>();
             hitEnemy.OnSelect();
-            //按左键攻击
-            if (Input.GetMouseButtonDown(0))
-            {
-                //关闭所有协同程序
-                StopAllCoroutines();
-                //显示鼠标
-                Cursor.visible = true;
+            
+                
 
                 if (UseCard() == true)
                 {
@@ -57,42 +54,52 @@ public class AttackCard : ActionCard, IPointerDownHandler
                     AudioManager.Instance.PlayEffect("AttackCard");
                     //敌人受伤
                     int val = int.Parse(data["Arg0"]);
-                    hitEnemy.Hit(val);
+                int hurt = int.Parse(data["Arg1"]);
+                    hitEnemy.Hit(val,hurt);
+                FightManager.Instance.ATKBuff = 0;
+                hitEnemy.OnUnSelect();
+                hitEnemy = null;
+                return true;
                 }
                 //敌人未选中
                 hitEnemy.OnUnSelect();
-                hitEnemy=null;
-            }
-        }
-        else
-        {
-            //未探测到敌人
-            if(hitEnemy == null)
-            {
-                hitEnemy.OnUnSelect();
                 hitEnemy = null;
-            }
+            
+            
         }
+        
+        return false;
     }
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        AudioManager.Instance.PlayEffect("Use");
-        Cursor.visible = false;//隐藏鼠标
-        StopAllCoroutines();//关闭协同程序
-        StartCoroutine(OnMouseDownRight(eventData));//鼠标操作协同程序
-    }
+    //public void OnPointerDown(PointerEventData eventData)
+    //{
+    //    AudioManager.Instance.PlayEffect("Use");
+    //    //Cursor.visible = false;//隐藏鼠标
+    //    //StopAllCoroutines();//关闭协同程序
+    //    StartCoroutine(OnMouseDownRight(eventData));//鼠标操作协同程序
+    //}
     public override void OnBeginDrag(PointerEventData eventData)
     {
         
-
+        base.OnBeginDrag(eventData);
 
     }
     public override void OnDrag(PointerEventData eventData)
     {
-       
+       base.OnDrag(eventData);
     }
     public override void OnEndDrag(PointerEventData eventData)
     {
+        Vector2 pos;
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            transform.parent.GetComponent<RectTransform>(),
+            eventData.position,
+            eventData.pressEventCamera,
+            out pos
+            ))
+        {
+            //进行射线检测是否碰到怪物
+            if(!CheckRayToEnemy()) base.OnEndDrag(eventData);
+        }
     }
     private void Start()
     {

@@ -17,9 +17,10 @@ public class RoleManager
         obj.transform.position = new Vector3(-5, 1, -6);
         //添加初始行动卡牌
         
-        int AttackCardCount = 4;
-        int DenfenseCardCount = 4;
-        int DealCardCount = 2;
+        int AttackCardCount = 5;
+        int DenfenseCardCount = 5;
+        
+        int ActionCardCount = 10;
 
         for (int i = 0; i < AttackCardCount; i++)
         {
@@ -29,10 +30,12 @@ public class RoleManager
         {
             cardList.Add("1001");
         }
-        for (int i = 0; i < DealCardCount; i++)
+        for (int i = 0; i < ActionCardCount; i++)
         {
-            cardList.Add("1002");
+            int id=Random.Range(1003, 1011);
+            cardList.Add(id.ToString());
         }
+        
 
     }
 }

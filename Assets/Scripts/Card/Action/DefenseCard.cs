@@ -9,7 +9,7 @@ public class DefenseCard : ActionCard
     {
         transform.Find("bg").GetComponent<Image>().sprite = Resources.Load<Sprite>(data["BgImage"]);
         transform.Find("bg/icon").GetComponent<Image>().sprite = Resources.Load<Sprite>(data["Image"]);
-        transform.Find("bg/msgTxt").GetComponent<Text>().text = string.Format(data["Des"], data["Arg0"]);
+        transform.Find("bg/msgTxt").GetComponent<Text>().text = string.Format(data["Des"], data["Arg1"]);
         transform.Find("bg/nameTxt").GetComponent<Text>().text = data["Name"];
         transform.Find("bg/useTxt").GetComponent<Text>().text = data["Expend"];
         transform.Find("bg/Text").GetComponent<Text>().text = GameConfigManager.Instance.GetCardTypeById(data["Type"])["Name"];
@@ -20,7 +20,7 @@ public class DefenseCard : ActionCard
     {
         if (UseCard() == true)
         {
-            int armor = int.Parse(data["Arg0"]);
+            int armor = int.Parse(data["Arg1"]);
             AudioManager.Instance.PlayEffect("defense");
 
 

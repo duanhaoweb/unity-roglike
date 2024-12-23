@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour
     public int Attack;
     public int MaxHp;
     public int CurrentHp;
+    private int index;
 
     //组件相关
     SkinnedMeshRenderer _meshRenderer;
@@ -104,19 +105,27 @@ public class Enemy : MonoBehaviour
     }
     public void OnSelect()
     {
-        this.transform.DOScale(1.7f, 0.25f);
+        index=this.transform.GetSiblingIndex();
+        this.transform.DOScale(2.0f, 0.25f);
+        transform.SetAsLastSibling();
     }
     public void OnUnSelect()
     {
         this.transform.DOScale(1.3f, 0.25f);
+        transform.SetSiblingIndex(index);
     }
-    public void Hit(int val)
+    public void Hit(int val,int hurt)
     {
         val += FightManager.Instance.ATKBuff;
+        
+       
+        
+        
         if (Defend >= val)
         {
             Defend-=val;
             //播放动画及音效
+            AudioManager.Instance.PlayEffect("Hurt");
         }
         else
         {
@@ -127,6 +136,7 @@ public class Enemy : MonoBehaviour
             {
                 CurrentHp = 0;
                 //播放死亡
+                AudioManager.Instance.PlayEffect("Die");
                 //敌人移除
                 EnemyManager.Instance.DeleteEnemy(this);
 
@@ -137,7 +147,24 @@ public class Enemy : MonoBehaviour
             else
             {
                 //受伤
+                AudioManager.Instance.PlayEffect("Hurt");
             }
+
+        }
+        //判定加buff还是扣血
+        if (hurt > 0)
+        {
+            FightManager.Instance.ATKBuff += hurt;
+            UIManager.Instance.ShowTip("攻击伤害提高！", Color.cyan);
+            //UIManager.Instance.GetUI<FightUI>("FightUI").UpdateDefense();
+
+        }
+        else if (hurt < 0)
+        {
+            FightManager.Instance.CurrentHP += hurt;
+            if (FightManager.Instance.CurrentHP < 0) FightManager.Instance.CurrentHP = 0;
+            UIManager.Instance.ShowTip("受到伤害！", Color.red);
+            UIManager.Instance.GetUI<FightUI>("FightUI").UpdateHp();
 
         }
         //刷新血量

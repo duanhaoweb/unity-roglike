@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+
 using static UnityEditor.PlayerSettings;
 
 
@@ -17,7 +18,7 @@ public class FightUI : UIBase
     private Text hpTxT;
     private Image hpImg;
     private Text defenseTxT;
-    private List<CardItem> CardItemList; //卡牌实体集合
+    public List<CardItem> CardItemList; //卡牌实体集合
     private void Awake()
     {
         CardItemList = new List<CardItem>();
@@ -89,7 +90,12 @@ public class FightUI : UIBase
         Vector2 pos = new Vector2(-807,-520);
         for (int i = count-1; i >=0; i--)
         {
+            
+            AudioManager.Instance.PlayEffect("DrawCard");
+            
+            FightCardManager.Instance.cardItemList[i].transform.SetSiblingIndex(FightCardManager.Instance.cardItemList.Count);
             FightCardManager.Instance.cardItemList[i].GetComponent<RectTransform>().DOAnchorPos(pos,0.5f);
+            Debug.Log(FightCardManager.Instance.cardItemList.Count);
             CardItemList.Add(FightCardManager.Instance.cardItemList[i]);
             FightCardManager.Instance.cardList.RemoveAt(i);
             FightCardManager.Instance.cardItemList.RemoveAt(i);

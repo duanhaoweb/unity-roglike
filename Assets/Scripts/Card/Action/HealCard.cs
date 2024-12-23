@@ -27,9 +27,11 @@ public class HealCard : ActionCard
             {
                 FightManager.Instance.CurrentHP = FightManager.Instance.MaxHP;
             }
+            AudioManager.Instance.PlayEffect("Heal");
+            UIManager.Instance.ShowTip("生命恢复！", Color.green);
             //播放音效
             //刷新数值及文本
-
+            UIManager.Instance.GetUI<FightUI>("FightUI").UpdateHp();
 
 
 
