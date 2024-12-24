@@ -19,6 +19,7 @@ public class FightUI : UIBase
     private Text hpTxT;
     private Image hpImg;
     private Text defenseTxT;
+    private Text attack_upTxT;
     public List<CardItem> CardItemList; //卡牌实体集合
     private void Awake()
     {
@@ -29,6 +30,16 @@ public class FightUI : UIBase
         hpTxT = transform.Find("hp/moneyTxt").GetComponent<Text>();
         hpImg = transform.Find("hp/fill").GetComponent<Image>();
         defenseTxT= transform.Find("hp/fangyu/Text").GetComponent<Text>();
+        attack_upTxT= transform.Find("attack_up/Text").GetComponent<Text>();
+        // 检查 transform.Find 是否成功找到对应物体
+        if (attack_upTxT == null)
+        {
+            Debug.LogError("未能找到 attack_up/Text 或者 Text 组件！");
+        }
+        else
+        {
+            Debug.Log("成功找到 attack_up/Text，并获取到 Text 组件！");
+        }
     }
 
     private void Start()
@@ -38,6 +49,7 @@ public class FightUI : UIBase
         UpdateDefense();
         UpdateUsedCardCount();
         UpdateCardCount();
+        UpdateATKbuff();
     }
     //更新血量显示
     public void UpdateHp()
@@ -56,6 +68,31 @@ public class FightUI : UIBase
     {
         defenseTxT.text=FightManager.Instance.DenfenseCount.ToString();
     }
+    //更新力量提升显示
+    public void UpdateATKbuff()
+    {
+        // 检查 attack_upTxT 是否已经初始化
+        if (attack_upTxT == null)
+        {
+            Debug.LogError("attack_upTxT 尚未初始化，请检查对象是否正确绑定！");
+            return;
+        }
+
+        // 检查 FightManager.Instance 是否为 null
+        if (FightManager.Instance == null)
+        {
+            Debug.LogError("FightManager.Instance 未初始化！");
+            return;
+        }
+
+        // 检查 ATKBuff 值
+        Debug.Log($"当前 ATKBuff 值为: {FightManager.Instance.ATKBuff}");
+
+        // 更新 UI 文本
+        attack_upTxT.text = FightManager.Instance.ATKBuff.ToString();
+        Debug.Log("attack_upTxT 已成功更新为: " + attack_upTxT.text);
+    }
+
     //更新抽卡堆数量
     public void UpdateCardCount()
     {
@@ -86,20 +123,20 @@ public class FightUI : UIBase
         //初始化背包
         for (int i = 1021; i>=1011; i--)
         {
-            Debug.Log(i);
+
 
             GameObject cardItem = Instantiate(Resources.Load("UI/CardItem"), transform) as GameObject;
             cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2000, -2000);//位置数据可调
             Dictionary<string, string> data = GameConfigManager.Instance.GetCardById(i.ToString());
-            Debug.Log(02);
+
             ItemCard item = cardItem.AddComponent(System.Type.GetType(data["Script"])) as ItemCard;
-            Debug.Log(033);
+
             
             item.Init(data);
             item.dur = int.Parse(data["Arg1"]);
-            Debug.Log(04);
+
             RoleManager.Instance.BagList.Add(item);
-            Debug.Log(5555);
+
         }
         
     }

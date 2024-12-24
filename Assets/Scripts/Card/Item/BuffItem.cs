@@ -32,7 +32,20 @@ public class BuffItem : ItemCard
 
 
 
+            if (FightManager.Instance == null)
+            {
+                Debug.LogError("FightManager.Instance 未初始化！");
+                return;
+            }
+
+            Debug.Log($"在增加 ATKBuff 前，当前 ATKBuff 值为: {FightManager.Instance.ATKBuff}");
+            Debug.Log($"增加的 buff 值为: {buff}");
+
+            // 执行加法操作
             FightManager.Instance.ATKBuff += buff;
+
+            Debug.Log($"增加 ATKBuff 后，当前 ATKBuff 值为: {FightManager.Instance.ATKBuff}");
+            UIManager.Instance.GetUI<FightUI>("FightUI").UpdateATKbuff();
             //播放音效
             //刷新文本
             //UIManager.Instance.GetUI<FightUI>("FightUI").UpdateDefense();

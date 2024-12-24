@@ -151,6 +151,7 @@ public class Enemy : MonoBehaviour
             }
 
         }
+        FightManager.Instance.ATKBuff = 0;
         //判定加buff还是扣血
         if (hurt > 0)
         {

@@ -34,8 +34,8 @@ public class FightManager : MonoBehaviour
     {
         MaxHP = 10;  
         CurrentHP = 10;
-        MaxPowerCount= 30;
-        CurrentPowerCount = 30;
+        MaxPowerCount= 3;
+        CurrentPowerCount = 3;
         DenfenseCount = 0;
         ATKBuff = 0;
         

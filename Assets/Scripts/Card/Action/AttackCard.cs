@@ -54,9 +54,9 @@ public class AttackCard : ActionCard//, IPointerDownHandler
                     AudioManager.Instance.PlayEffect("AttackCard");
                     //µ–»À ‹…À
                     int val = int.Parse(data["Arg0"]);
-                int hurt = int.Parse(data["Arg1"]);
+                    int hurt = int.Parse(data["Arg1"]);
                     hitEnemy.Hit(val,hurt);
-                FightManager.Instance.ATKBuff = 0;
+
                 hitEnemy.OnUnSelect();
                 hitEnemy = null;
                 return true;

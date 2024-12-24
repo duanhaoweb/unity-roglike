@@ -37,7 +37,7 @@ public class BuffCard : ActionCard
             //pos.y = 0;
             UIManager.Instance.ShowTip("¹¥»÷ÉËº¦ÌáÉý£¡", Color.cyan);
 
-
+            UIManager.Instance.GetUI<FightUI>("FightUI").UpdateATKbuff();
 
 
         }

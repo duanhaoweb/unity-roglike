@@ -30,9 +30,9 @@ public class AttackWeapon : ItemCard
                 UIManager.Instance.ShowTip("进行攻击！", Color.red);
                 AudioManager.Instance.PlayEffect("AttackCard");
                 //敌人受伤
-                int val = int.Parse(data["Arg0"]);
-                
-                hitEnemy.Hit(val);
+                    int val = int.Parse(data["Arg0"]);
+                    int hurt = int.Parse(data["Arg1"]);
+                    hitEnemy.Hit(val,hurt);
                 FightManager.Instance.ATKBuff = 0;
                 hitEnemy.OnUnSelect();
                 hitEnemy = null;
