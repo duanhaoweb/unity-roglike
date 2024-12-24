@@ -4,13 +4,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
+using static UnityEditor.PlayerSettings;
+
 public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,IBeginDragHandler,IDragHandler,IEndDragHandler
 {
     public Dictionary<string, string> data;//卡牌信息
     private int index;
+    public float y;
     public void Init(Dictionary<string,string> data)
     {
         this.data = data;
+        y = -520;
         Debug.Log("success!!!!");
     }
 
@@ -22,7 +26,7 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,I
         transform.Find("bg/nameTxt").GetComponent<Text>().text = data["Name"];
         transform.Find("bg/useTxt").GetComponent<Text>().text = data["Expend"];
         transform.Find("bg/Text").GetComponent<Text>().text = GameConfigManager.Instance.GetCardTypeById(data["Type"])["Name"];
-
+         
     }
    
     public virtual bool UseCard()
@@ -69,19 +73,22 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,I
         effect.transform.position = pos;
         Destroy(effect, 2);
     }
+
     //鼠标进入
     public void OnPointerEnter(PointerEventData eventData)
     {
+        
         transform.DOScale(0.85f, 0.25f);
-        transform.DOMoveY(200, 0.25f);
+        GetComponent<RectTransform>().DOAnchorPosY(y+100,0.25f);
         index = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
     }
     //鼠标退出
     public void OnPointerExit(PointerEventData eventData)
     {
+        
         transform.DOScale(0.602f, 0.25f);
-        transform.DOMoveY(65, 0.25f);
+        GetComponent<RectTransform>().DOAnchorPosY(y, 0.25f);
         transform.SetSiblingIndex(index);
     }
     Vector2 initPos;//拖拽时记录卡牌位置

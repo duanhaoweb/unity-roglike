@@ -31,9 +31,9 @@ public class AttackWeapon : ItemCard
                 AudioManager.Instance.PlayEffect("AttackCard");
                 //µ–»À ‹…À
                     int val = int.Parse(data["Arg0"]);
-                    int hurt = int.Parse(data["Arg1"]);
-                    hitEnemy.Hit(val,hurt);
-                FightManager.Instance.ATKBuff = 0;
+                    
+                    hitEnemy.Hit(val);
+                UIManager.Instance.GetUI<FightUI>("FightUI").UpdateATKbuff();
                 hitEnemy.OnUnSelect();
                 hitEnemy = null;
                 return true;

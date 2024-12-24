@@ -15,7 +15,7 @@ public class Fight_PlayerTurn: FightUnit
 
             //≥È≈∆
             Debug.Log("≥È≈∆");
-            UIManager.Instance.GetUI<FightUI>("FightUI").DrawCardItem(6);//≥È6’≈≈∆
+            UIManager.Instance.GetUI<FightUI>("FightUI").DrawCardItem(30);//≥È6’≈≈∆
             UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardItemPos();
         });
     }
