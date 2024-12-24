@@ -27,7 +27,7 @@ public class DefenseCard : ActionCard
 
 
 
-            FightManager.Instance.DenfenseCount += armor;
+            FightManager.Instance.DefenseCount += armor;
                 //播放音效
                 //刷新护甲及文本
             UIManager.Instance.GetUI<FightUI>("FightUI").UpdateDefense();

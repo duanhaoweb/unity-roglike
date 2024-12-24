@@ -11,7 +11,7 @@ public class CardItem : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,I
     public void Init(Dictionary<string,string> data)
     {
         this.data = data;
-        Debug.Log("success!!!!");
+
     }
 
     private void Start()

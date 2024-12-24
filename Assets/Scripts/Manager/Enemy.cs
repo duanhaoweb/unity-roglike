@@ -117,10 +117,7 @@ public class Enemy : MonoBehaviour
     public void Hit(int val,int hurt)
     {
         val += FightManager.Instance.ATKBuff;
-        
-       
-        
-        
+   
         if (Defend >= val)
         {
             Defend-=val;
@@ -143,6 +140,10 @@ public class Enemy : MonoBehaviour
                 Destroy(gameObject, 1);
                 Destroy(actionObj);
                 Destroy(hpItemObj);
+                if(EnemyManager.Instance.enemyList.Count==0)
+                {
+                    FightManager.Instance.ChangeType(FightType.Win);
+                }
             }
             else
             {
@@ -176,9 +177,6 @@ public class Enemy : MonoBehaviour
     public void Hit(int val)
     {
         val += FightManager.Instance.ATKBuff;
-
-
-
 
         if (Defend >= val)
         {
@@ -214,6 +212,39 @@ public class Enemy : MonoBehaviour
         //刷新血量
         UpdateDefend();
         UpdateHp();
+
+    }
+    //隐藏怪物头上的行动标志
+    public void HideAction()
+    {
+        attackTf.gameObject.SetActive(false);
+        defendTf.gameObject.SetActive(false);
+    }
+    //敌人行动
+    public IEnumerator DoAction()
+    {
+        HideAction();
+        //播放怪物攻击动画
+        //等待某一时间后执行对应的行为（都要配置到excel表）
+        yield return new WaitForSeconds(0.5f);
+        switch (type) 
+        {
+            case ActionType.None:
+                break;
+            case ActionType.Defend:
+                Defend += 5;
+                UpdateDefend();
+                break;
+            case ActionType.Attack:
+                //玩家扣血
+                FightManager.Instance.GetPlayerHit(Attack);
+                //摄像机微微颤抖
+                Camera.main.DOShakePosition(0.1f,0.2f,5,45);
+                break;
+        }
+        //等待动画播放完毕
+        yield return new WaitForSeconds(1);
+        //播放待机动画
 
     }
 }

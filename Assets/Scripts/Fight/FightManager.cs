@@ -21,29 +21,28 @@ public class FightManager : MonoBehaviour
     public static FightManager Instance;
     public FightUnit fightUnit; // 战斗单元
 
-    public int MaxHP;//最大血量
-    public int CurrentHP;//当前血量
+    public static int MaxHP=10;//最大血量
+    public int CurrentHP=0;//当前血量
 
-    public int MaxPowerCount;//最大卡牌费用（能量）
-    public int CurrentPowerCount;//当前能量
+    public int MaxPowerCount = 0;//最大卡牌费用（能量）
+    public int CurrentPowerCount = 0;//当前能量
 
-    public int DenfenseCount;//盾（护甲）值
-    public int ATKBuff;//增伤值
+    public int DefenseCount = 0;//盾（护甲）值
+    public int ATKBuff = 0;//增伤值
     
     public void Init()
     {
-        MaxHP = 10;  
         CurrentHP = 10;
         MaxPowerCount= 3;
         CurrentPowerCount = 3;
-        DenfenseCount = 0;
+        DefenseCount = 0;
         ATKBuff = 0;
         
     }
     private void Awake()
     {
         Instance = this;
-        Debug.Log("FightManager 已初始化");
+
     }
 
     // 切换战斗类型
@@ -90,11 +89,39 @@ public class FightManager : MonoBehaviour
         }
     }
 
+    ///敌人回合玩家受伤
+    public void GetPlayerHit(int hit)
+    {
+        //先扣护盾值
+        if(DefenseCount>=hit)
+        {
+            DefenseCount -= hit;
+        }
+        else
+        {
+            hit = hit - DefenseCount;
+            DefenseCount = 0;
+            CurrentHP -= hit;
+            if ( CurrentHP<= 0)
+            {
+                CurrentHP = 0;
+                //游戏失败
+                ChangeType(FightType.Loss);
+
+            }
+
+        }
+        //更新下一轮页面
+        UIManager.Instance.GetUI<FightUI>("FightUI").UpdateHp();
+        UIManager.Instance.GetUI<FightUI>("FightUI").UpdateDefense();
+
+        UIManager.Instance.GetUI<FightUI>("FightUI").UpdatePower();
+    }
     private void Update()
     {
         if (fightUnit != null)
         {
-            //Debug.Log($"调用 {fightUnit.GetType().Name} 的 OnUpdate 方法");
+
             fightUnit.OnUpdate();
         }
         else

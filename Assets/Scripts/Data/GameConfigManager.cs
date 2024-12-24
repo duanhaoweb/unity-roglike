@@ -26,12 +26,10 @@ public class GameConfigManager
             return;
         }
 
-        Debug.Log("成功加载 card.txt 文件内容：");
-        Debug.Log(textAsset.text); // 输出文件内容，便于检查格式是否正确
-
+    
 
     
-    textAsset = Resources.Load<TextAsset>("Data/enemy");
+        textAsset = Resources.Load<TextAsset>("Data/enemy");
         enemyData = new GameConfigData(textAsset.text);
 
         textAsset = Resources.Load<TextAsset>("Data/level");

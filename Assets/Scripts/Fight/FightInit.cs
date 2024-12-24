@@ -5,6 +5,7 @@ using UnityEngine;
 //卡片战斗初始化
 public class FightInit : FightUnit
 {
+    static int levelIndex = 1;
     public override void Init()
     {
         //战斗初始化数值
@@ -14,8 +15,8 @@ public class FightInit : FightUnit
         AudioManager.Instance.PlayBGM("Attack");
 
         //敌人生成
-        EnemyManager.Instance.LoadRes("10001");//读取关卡1的敌人信息
-
+        EnemyManager.Instance.LoadRes($"1000{levelIndex}");//读取关卡1的敌人信息
+        levelIndex++;
         //初始化战斗卡牌
         FightCardManager.Instance.Init();
         

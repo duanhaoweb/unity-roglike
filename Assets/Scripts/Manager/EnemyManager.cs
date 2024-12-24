@@ -8,7 +8,7 @@ public class EnemyManager
 {
     public static EnemyManager Instance = new EnemyManager();
 
-    private List<Enemy> enemyList;//存储战斗中的敌人
+    public List<Enemy> enemyList;//存储战斗中的敌人
     /// <summary>
     /// 加载敌人资源
     /// </summary>
@@ -47,5 +47,22 @@ public class EnemyManager
     public void DeleteEnemy(Enemy enemy)
     {
         enemyList.Remove(enemy);
+    }
+    public IEnumerator DoAllEnemyAction()
+    {
+        for(int i = 0;i < enemyList.Count;i++)
+        {
+            yield return FightManager.Instance.StartCoroutine(enemyList[i].DoAction());
+        }
+        //行动完后更新所有敌人的行为
+        for(int i = 0; i < enemyList.Count;i++)
+        {
+            enemyList[i].SetAction();
+        }
+        //且切换到玩家回合
+        if (FightManager.Instance.fightUnit is Fight_EnemyTurn)
+        {
+            FightManager.Instance.ChangeType(FightType.Player);
+        }
     }
 }

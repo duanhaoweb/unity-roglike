@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ActionCard : CardItem
 {
-    bool is_bringout=false;
+
     void Start()
     {
         
