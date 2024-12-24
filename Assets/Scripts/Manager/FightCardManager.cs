@@ -40,7 +40,7 @@ public class FightCardManager : UIBase
             return;
         }
 
-        // **卡组
+        // 卡组
         cardList.AddRange(RoleManager.Instance.cardList);
 
         // Fisher-Yates 洗牌算法，将卡组中的牌打乱顺序后加入到抽牌堆
@@ -61,7 +61,10 @@ public class FightCardManager : UIBase
     {
         return cardList.Count > 0;
     }
-
+    public int CardCount()
+    {
+        return cardList.Count;
+    }
     // 抽卡
     public string DrawCard()
     {

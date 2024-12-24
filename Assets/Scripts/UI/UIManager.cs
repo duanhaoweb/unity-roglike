@@ -128,8 +128,6 @@ public class UIManager : MonoBehaviour
         {
             if (callback != null)
                 callback();
-
-
         }
         );
         MonoBehaviour.Destroy(obj,1);

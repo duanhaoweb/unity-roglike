@@ -27,9 +27,9 @@ public class FoodCard : ItemCard
             int heal = int.Parse(data["Arg0"]);
 
             FightManager.Instance.CurrentHP += heal;
-            if (FightManager.Instance.CurrentHP >= FightManager.Instance.MaxHP)
+            if (FightManager.Instance.CurrentHP >= FightManager.MaxHP)
             {
-                FightManager.Instance.CurrentHP = FightManager.Instance.MaxHP;
+                FightManager.Instance.CurrentHP = FightManager.MaxHP;
             }
             AudioManager.Instance.PlayEffect("Heal");
             UIManager.Instance.ShowTip("ÉúÃü»Ö¸´£¡", Color.green);

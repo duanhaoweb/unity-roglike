@@ -26,12 +26,7 @@ public class DefenseWeapon : ItemCard
         {
             int armor = int.Parse(data["Arg0"]);
             AudioManager.Instance.PlayEffect("defense");
-
-
-
-
-
-            FightManager.Instance.DenfenseCount += armor;
+            FightManager.Instance.DefenseCount += armor;
             //播放音效
             //刷新护甲及文本
             UIManager.Instance.GetUI<FightUI>("FightUI").UpdateDefense();
@@ -39,9 +34,6 @@ public class DefenseWeapon : ItemCard
             //Vector3 pos = Camera.main.transform.position;
             //pos.y = 0;
             UIManager.Instance.ShowTip("防御提升！", Color.blue);
-
-
-
 
         }
         else
