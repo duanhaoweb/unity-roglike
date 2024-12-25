@@ -6,7 +6,7 @@ public class CameraMove : MonoBehaviour
 {
     public float scrollSpeed = 5f; // 鼠标滚轮控制相机移动的速度，可在Unity编辑器中调整
     public float minY = 1f; // 摄像机Y轴坐标下限，可在Unity编辑器中调整
-    public float maxY = 18f; // 摄像机Y轴坐标上限，可在Unity编辑器中调整
+    public float maxY = 24f; // 摄像机Y轴坐标上限，可在Unity编辑器中调整
 
     void CameraConcle()
     {

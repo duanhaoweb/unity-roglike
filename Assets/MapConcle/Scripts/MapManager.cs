@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
+    //房间路线选择
+    [SerializeField]
+    static public int Chooselayer = 0;
+    [SerializeField]
+    static public int Chooseroom = 0;
+    //房间种类
+    static public int roomtype = 0;
     //层数
     static public bool nextmap = true;
     public int layerNum = 0;
@@ -16,12 +24,29 @@ public class MapManager : MonoBehaviour
     public float layerWidth = 6f;
 
     public Transform _firstPos;
+    //场景显示
+    [SerializeField]
+    public string[] visibleScenes; // 定义一个字符串数组，存储该物体需要显示的场景名称
 
     static public List<MapLayer> mapLayers;
     static public List<MapLayer> newmapLayers;
     [SerializeField] MapRoom _mapRoomPrefab;
 
     //[Button("测试")]
+    private void Awake()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        bool shouldBeVisible = false;
+        foreach (string sceneName in visibleScenes)
+        {
+            if (currentSceneName == sceneName)
+            {
+                shouldBeVisible = true;
+                break;
+            }
+        }
+        gameObject.SetActive(shouldBeVisible);
+    }
     private void Start()
     {
         if (nextmap)
@@ -34,11 +59,15 @@ public class MapManager : MonoBehaviour
         }
         else 
         {
-            RecreatRoom();
+            RecreatRoom();//重新生成房间
             ConnectRoom();//连接房间
             CreateLine();//房间画线
         }
 
+    }
+    private void OnDisable()
+    {
+        gameObject.SetActive(false);
     }
     private void ClearAllRoom()
     {
@@ -71,6 +100,7 @@ public class MapManager : MonoBehaviour
             var num = Random.Range(5, LayerNum);
             if (i == 0) num = 1;//设置第一层房间数
             else if (i == layerNum - 1) num = 1;//设置最后一层房间数
+            Judge(i);
             float posX=_firstPos.position.x;//上一间房子的x坐标位置
             for (int j = 0; j < num; j++)
             {
@@ -79,7 +109,18 @@ public class MapManager : MonoBehaviour
                 posX = posX + layerWidth/num + Random.Range(-0.5f, 0.5f);//平铺之后+随机横向偏移
                 mapRoom.transform.position = new Vector3(posX, mapLayer.posY, 0);
                 mapRoom.posX = posX;
+                mapRoom.roomi = i;
+                mapRoom.roomj = j;
                 mapRooms.Add(mapRoom);
+                if (i == 0 && j == 0) 
+                {
+                    mapRoom.layerchoose = true;
+                    mapRoom.roomchoose = true;
+                }
+                if (Chooselayer == i) 
+                {
+                    mapRoom.layerchoose = true;
+                }
             }
             mapLayer.rooms = mapRooms;
             mapLayers.Add(mapLayer);
@@ -100,6 +141,7 @@ public class MapManager : MonoBehaviour
                 }).ToList().Min();
                 rooms[j].connectRooms.Add(min.Item2);
             }
+
         }
 
         //断路检测 
@@ -127,6 +169,22 @@ public class MapManager : MonoBehaviour
                     }
                 }
             }
+        }
+        //设置可选路径
+        for (int i = 0; i < newmapLayers.Count - 1; i++)
+        {
+            var rooms = newmapLayers[i].rooms;
+            for (int j = 0; j < rooms.Count; j++)
+            {
+                if (Chooseroom == j)
+                {
+                    for (int k = 0; k < rooms[j].connectRooms.Count; k++)
+                    {
+                        rooms[j].connectRooms[k].roomchoose = true;
+                    }
+                }
+            }
+
         }
     }
     [SerializeField] LineRenderer _linePrefab;
@@ -167,10 +225,35 @@ public class MapManager : MonoBehaviour
                 mapRoom.transform.position = new Vector3(posX, mapLayer.posY, 0);
                 mapRoom.GetComponent<SpriteRenderer>().sprite = mapRoom.sprites[mapLayers[i].rooms[j].type];
                 mapRooms.Add(mapRoom);
-               
+                mapRoom.roomi = i;
+                mapRoom.roomj = j;
+                mapRoom.type = mapLayers[i].rooms[j].type;
+                if (Chooselayer == i)
+                {
+                    mapRoom.layerchoose = true;
+                }
             }
             mapLayer.rooms = mapRooms;
             newmapLayers.Add(mapLayer);
+        }
+    }
+    private void Judge(int i) 
+    {
+        if (i == 0)
+        {
+            roomtype = 1;
+        }
+        else if (i == layerNum - 1)
+        {
+            roomtype = 2;
+        }
+        else if (i == layerNum - 2) 
+        {
+            roomtype = 3;
+        }
+        else
+        {
+            roomtype = 4;
         }
     }
 }

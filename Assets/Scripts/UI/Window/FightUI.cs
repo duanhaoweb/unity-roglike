@@ -10,17 +10,17 @@ using static UnityEditor.PlayerSettings;
 using static UnityEditor.Timeline.Actions.MenuPriority;
 
 
-//Õ½¶·Ò³Ãæ
+//Õ½ï¿½ï¿½Ò³ï¿½ï¿½
 public class FightUI : UIBase
 {
-    private Text cardCountTxT;//³éÅÆ¶Ñ¿¨ÅÆÊýÁ¿
-    private Text usedCardCountTxT;//ÆúÅÆ¶Ñ¿¨ÅÆÊýÁ¿
+    private Text cardCountTxT;//ï¿½ï¿½ï¿½Æ¶Ñ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private Text usedCardCountTxT;//ï¿½ï¿½ï¿½Æ¶Ñ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private Text powerTxT;
     private Text hpTxT;
     private Image hpImg;
     private Text defenseTxT;
     private Text attack_upTxT;
-    public List<CardItem> CardItemList; //¿¨ÅÆÊµÌå¼¯ºÏ
+    public List<CardItem> CardItemList; //ï¿½ï¿½ï¿½ï¿½Êµï¿½å¼¯ï¿½ï¿½
     private void Awake()
     {
         CardItemList = new List<CardItem>();
@@ -31,14 +31,14 @@ public class FightUI : UIBase
         hpImg = transform.Find("hp/fill").GetComponent<Image>();
         defenseTxT= transform.Find("hp/fangyu/Text").GetComponent<Text>();
         attack_upTxT= transform.Find("attack_up/Text").GetComponent<Text>();
-        // ¼ì²é transform.Find ÊÇ·ñ³É¹¦ÕÒµ½¶ÔÓ¦ÎïÌå
+        // ï¿½ï¿½ï¿½ transform.Find ï¿½Ç·ï¿½É¹ï¿½ï¿½Òµï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
         if (attack_upTxT == null)
         {
-            Debug.LogError("Î´ÄÜÕÒµ½ attack_up/Text »òÕß Text ×é¼þ£¡");
+            Debug.LogError("Î´ï¿½ï¿½ï¿½Òµï¿½ attack_up/Text ï¿½ï¿½ï¿½ï¿½ Text ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
         else
         {
-            Debug.Log("³É¹¦ÕÒµ½ attack_up/Text£¬²¢»ñÈ¡µ½ Text ×é¼þ£¡");
+            Debug.Log("ï¿½É¹ï¿½ï¿½Òµï¿½ attack_up/Textï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ Text ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
@@ -51,65 +51,65 @@ public class FightUI : UIBase
         UpdateCardCount();
         UpdateATKbuff();
     }
-    //¸üÐÂÑªÁ¿ÏÔÊ¾
+    //ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½ï¿½Ê¾
     public void UpdateHp()
     {
         hpTxT.text = FightManager.Instance.CurrentHP + "/" + FightManager.Instance.MaxHP;
-        hpImg.fillAmount=(float)FightManager.Instance.CurrentHP/(float)FightManager.Instance.MaxHP;//°Ù·Ö±ÈÏÔÊ¾Í¼Æ¬
+        hpImg.fillAmount=(float)FightManager.Instance.CurrentHP/(float)FightManager.Instance.MaxHP;//ï¿½Ù·Ö±ï¿½ï¿½ï¿½Ê¾Í¼Æ¬
     }
-    //¸üÐÂÄÜÁ¿ÏÔÊ¾
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
     public void UpdatePower()
     {
         powerTxT.text = FightManager.Instance.CurrentPowerCount + "/" + FightManager.Instance.MaxPowerCount;
 
     }
-    //¸üÐÂ·ÀÓùÏÔÊ¾
+    //ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
     public void UpdateDefense()
     {
         defenseTxT.text=FightManager.Instance.DenfenseCount.ToString();
     }
-    //¸üÐÂÁ¦Á¿ÌáÉýÏÔÊ¾
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
     public void UpdateATKbuff()
     {
-        // ¼ì²é attack_upTxT ÊÇ·ñÒÑ¾­³õÊ¼»¯
+        // ï¿½ï¿½ï¿½ attack_upTxT ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
         if (attack_upTxT == null)
         {
-            Debug.LogError("attack_upTxT ÉÐÎ´³õÊ¼»¯£¬Çë¼ì²é¶ÔÏóÊÇ·ñÕýÈ·°ó¶¨£¡");
+            Debug.LogError("attack_upTxT ï¿½ï¿½Î´ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½È·ï¿½ó¶¨£ï¿½");
             return;
         }
 
-        // ¼ì²é FightManager.Instance ÊÇ·ñÎª null
+        // ï¿½ï¿½ï¿½ FightManager.Instance ï¿½Ç·ï¿½Îª null
         if (FightManager.Instance == null)
         {
-            Debug.LogError("FightManager.Instance Î´³õÊ¼»¯£¡");
+            Debug.LogError("FightManager.Instance Î´ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½");
             return;
         }
 
-        // ¼ì²é ATKBuff Öµ
-        Debug.Log($"µ±Ç° ATKBuff ÖµÎª: {FightManager.Instance.ATKBuff}");
+        // ï¿½ï¿½ï¿½ ATKBuff Öµ
+        Debug.Log($"ï¿½ï¿½Ç° ATKBuff ÖµÎª: {FightManager.Instance.ATKBuff}");
 
-        // ¸üÐÂ UI ÎÄ±¾
+        // ï¿½ï¿½ï¿½ï¿½ UI ï¿½Ä±ï¿½
         attack_upTxT.text = FightManager.Instance.ATKBuff.ToString();
-        Debug.Log("attack_upTxT ÒÑ³É¹¦¸üÐÂÎª: " + attack_upTxT.text);
+        Debug.Log("attack_upTxT ï¿½Ñ³É¹ï¿½ï¿½ï¿½ï¿½ï¿½Îª: " + attack_upTxT.text);
     }
 
-    //¸üÐÂ³é¿¨¶ÑÊýÁ¿
+    //ï¿½ï¿½ï¿½Â³é¿¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void UpdateCardCount()
     {
         cardCountTxT.text=FightCardManager.Instance.cardList.Count.ToString();
     }
-    //¸üÐÂÆúÅÆ¶ÑÊýÁ¿
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½
     public void UpdateUsedCardCount()
     {
         usedCardCountTxT.text=FightCardManager.Instance.usedcardList.Count.ToString();
     }
     public void CreateCardItem()
     {
-        //Ô¤ÏÈ´´½¨ºÃ¿¨ÅÆÊµÌå ·ÅÔÚ¾µÍ·Íâ
+        //Ô¤ï¿½È´ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½Êµï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½Í·ï¿½ï¿½
         for (int i = FightCardManager.Instance.cardList.Count - 1; i >= 0; i--)
         {
             GameObject cardItem = Instantiate(Resources.Load("UI/CardItem"), transform) as GameObject;
-            cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2000, -2000);//Î»ÖÃÊý¾Ý¿Éµ÷
+            cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2000, -2000);//Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿Éµï¿½
             
 
             Dictionary<string, string> data = GameConfigManager.Instance.GetCardById(FightCardManager.Instance.cardList[i]);
@@ -120,13 +120,13 @@ public class FightUI : UIBase
     }
     public void UnitBag()
     {
-        //³õÊ¼»¯±³°ü
+        //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         for (int i = 1021; i>=1011; i--)
         {
 
 
             GameObject cardItem = Instantiate(Resources.Load("UI/CardItem"), transform) as GameObject;
-            cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2000, -2000);//Î»ÖÃÊý¾Ý¿Éµ÷
+            cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2000, -2000);//Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿Éµï¿½
             Dictionary<string, string> data = GameConfigManager.Instance.GetCardById(i.ToString());
 
             ItemCard item = cardItem.AddComponent(System.Type.GetType(data["Script"])) as ItemCard;
@@ -142,11 +142,11 @@ public class FightUI : UIBase
     }
     public void CreateItemCard()
     {
-        //Ô¤ÏÈ´´½¨ºÃ¿¨ÅÆÊµÌå ·ÅÔÚ¾µÍ·Íâ
+        //Ô¤ï¿½È´ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½Êµï¿½ï¿½ ï¿½ï¿½ï¿½Ú¾ï¿½Í·ï¿½ï¿½
         for (int i = RoleManager.Instance.BagList.Count - 1; i >= 0; i--)
         {
 
-            RoleManager.Instance.BagList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(-3000, -3000);//Î»ÖÃÊý¾Ý¿Éµ÷
+            RoleManager.Instance.BagList[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(-3000, -3000);//Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿Éµï¿½
 
 
             
@@ -163,11 +163,11 @@ public class FightUI : UIBase
             count = FightCardManager.Instance.cardList.Count;
         }
         Vector2 pos = new Vector2(-807,-520);
-        // Fisher-Yates Ï´ÅÆËã·¨£¬½«¿¨×éÖÐµÄÅÆ´òÂÒË³Ðòºó¼ÓÈëµ½³éÅÆ¶Ñ
+        // Fisher-Yates Ï´ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½Æ´ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ëµ½ï¿½ï¿½ï¿½Æ¶ï¿½
         for (int i = FightCardManager.Instance.cardItemList.Count - 1; i >= 0; i--)
         {
             int randomIndex = UnityEngine.Random.Range(0, i + 1);
-            // ½»»»µ±Ç°ÔªËØºÍËæ»úË÷ÒýµÄÔªËØ
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Ôªï¿½Øºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
             CardItem temp = FightCardManager.Instance.cardItemList[i];
             FightCardManager.Instance.cardItemList[i] = FightCardManager.Instance.cardItemList[randomIndex];
             FightCardManager.Instance.cardItemList[randomIndex] = temp;
@@ -185,7 +185,7 @@ public class FightUI : UIBase
             FightCardManager.Instance.cardItemList.RemoveAt(i);
             UpdateCardCount();
             //GameObject cardItem = Instantiate(Resources.Load("UI/CardItem"), transform) as GameObject;
-            //cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-800, -300);//Î»ÖÃÊý¾Ý¿Éµ÷
+            //cardItem.GetComponent<RectTransform>().anchoredPosition = new Vector2(-800, -300);//Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿Éµï¿½
             //var item = cardItem.AddComponent<CardItem>();
             //string id = FightCardManager.Instance.DrawCard();
             //Dictionary<string, string> data = GameConfigManager.Instance.GetCardById(id);
@@ -218,10 +218,10 @@ public class FightUI : UIBase
         CardItemList.Remove(cardItem);
         usedCardCountTxT.text = FightCardManager.Instance.usedcardList.Count.ToString();
         UpdateCardCount();
-        //Ë¢ÐÂ¿¨ÅÆÎ»ÖÃ
+        //Ë¢ï¿½Â¿ï¿½ï¿½ï¿½Î»ï¿½ï¿½
         UpdateCardItemPos();
 
-        //¿¨ÅÆÒÆµ½ÆúÅÆ¶ÑÐ§¹û
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Ð§ï¿½ï¿½
         cardItem.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-143,126), 0.5f);
         cardItem.transform.DOScale(0, 0.5f);
         cardItem.GetComponent<RectTransform>().DOAnchorPos(new Vector2(-2000, -2000), 0.5f);

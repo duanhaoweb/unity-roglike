@@ -2,34 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//¿¨Æ¬Õ½¶·³õÊ¼»¯
+//ï¿½ï¿½Æ¬Õ½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
 public class FightInit : FightUnit
 {
     public override void Init()
     {
-        //Õ½¶·³õÊ¼»¯ÊýÖµ
+        //Õ½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Öµ
         FightManager.Instance.Init();
-        // ÇÐ»» BGM
-        Debug.Log("ÇÐ»» BGM£º²¥·Å 'Attack' ÒôÀÖ");
+        // ï¿½Ð»ï¿½ BGM
+        Debug.Log("ï¿½Ð»ï¿½ BGMï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 'Attack' ï¿½ï¿½ï¿½ï¿½");
         AudioManager.Instance.PlayBGM("Attack");
 
-        //µÐÈËÉú³É
-        EnemyManager.Instance.LoadRes("10001");//¶ÁÈ¡¹Ø¿¨1µÄµÐÈËÐÅÏ¢
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        EnemyManager.Instance.LoadRes("10001");//ï¿½ï¿½È¡ï¿½Ø¿ï¿½1ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 
-        //³õÊ¼»¯Õ½¶·¿¨ÅÆ
+        //ï¿½ï¿½Ê¼ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         FightCardManager.Instance.Init();
         
 
-        // ÏÔÊ¾Õ½¶·Ò³Ãæ
-        Debug.Log("ÏÔÊ¾Õ½¶·Ò³Ãæ£º¼ÓÔØ 'FightUI'");
+        // ï¿½ï¿½Ê¾Õ½ï¿½ï¿½Ò³ï¿½ï¿½
+        Debug.Log("ï¿½ï¿½Ê¾Õ½ï¿½ï¿½Ò³ï¿½æ£ºï¿½ï¿½ï¿½ï¿½ 'FightUI'");
         UIManager.Instance.ShowUI<FightUI>("FightUI");
-        //ÊµÀý»¯Õ½¶·¿¨ÅÆ
+        //Êµï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         UIManager.Instance.GetUI<FightUI>("FightUI").CreateCardItem();
-        //³õÊ¼»¯±³°ü
+        //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         UIManager.Instance.GetUI<FightUI>("FightUI").UnitBag();
-        //ÊµÀý»¯ÎïÆ·¿¨ÅÆ
+        //Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
         UIManager.Instance.GetUI<FightUI>("FightUI").CreateItemCard();
-        //ÇÐ»»µ½Íæ¼Ò»ØºÏ
+        //ï¿½Ð»ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Øºï¿½
         FightManager.Instance.ChangeType(FightType.Player);
     }
     public override void OnUpdate()

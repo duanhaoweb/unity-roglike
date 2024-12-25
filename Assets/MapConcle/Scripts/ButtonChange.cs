@@ -19,6 +19,6 @@ public class ButtonChange : MonoBehaviour
 
     public void Jump() 
     {
-        SceneManager.LoadScene("001");
+        SceneManager.LoadScene("MapScene");
     }
 }

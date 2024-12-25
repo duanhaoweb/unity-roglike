@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-//¿ªÊ¼Ò³Ãæ£¨¼Ì³ÐUIBase£©
+//ï¿½ï¿½Ê¼Ò³ï¿½æ£¨ï¿½Ì³ï¿½UIBaseï¿½ï¿½
 public class LoginUI : UIBase
 {
     private void Awake()
@@ -15,7 +15,7 @@ public class LoginUI : UIBase
             return;
         }
 
-        // °ó¶¨ÊÂ¼þ´¦Àí·½·¨
+        // ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         gameStartButton.OnClick = onStartGameBtn;
 
     }
@@ -24,7 +24,7 @@ public class LoginUI : UIBase
     {
 
         Close();
-        //Õ½¶·³õÊ¼»¯
+        //Õ½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
         FightManager.Instance.ChangeType(FightType.Init);
 
     }
