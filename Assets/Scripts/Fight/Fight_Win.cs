@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class Fight_Win : FightUnit
         // 关闭拖动路径 UI
         UIManager.Instance.CloseUI("LineUI");
         Cursor.visible = true;
+        DOTween.KillAll();
 
         FightManager.Instance.StopAllCoroutines();
         //显示敌人回合提示

@@ -24,9 +24,10 @@ public class SelectCardUI : UIBase
     {
 
         Close();
-
+        //随机获得一张卡牌
         //进入地图页面
-       // UIManager.Instance.ShowUI<FightUI>("FightUI");
+        // UIManager.Instance.ShowUI<FightUI>("FightUI");
+
     }
     private void onStartGameBtn2(GameObject obj, PointerEventData pData)
     {
@@ -43,6 +44,7 @@ public class SelectCardUI : UIBase
         Close();
         //进入背包页面
         // UIManager.Instance.ShowUI<FightUI>("FightUI");
+        //删除卡牌
 
     }
     private void onReturnGameBtn(GameObject obj, PointerEventData pData)
