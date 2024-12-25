@@ -8,10 +8,10 @@ public class SelectCardUI : UIBase
 {
     private void Awake()
     {
-        var gameButton1 = Register("Btn1");
-        var gameButton2 = Register("Btn2");
-        var gameButton3 = Register("Btn3");
-        var gameReturnButton = Register("Btn3");
+        var gameButton1 = Register("content/Btn1");
+        var gameButton2 = Register("content/Btn2");
+        var gameButton3 = Register("content/Btn3");
+        var gameReturnButton = Register("content/returnBtn");
 
         // 绑定事件处理方法
         gameButton1.OnClick = onStartGameBtn1;

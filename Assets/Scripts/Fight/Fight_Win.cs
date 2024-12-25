@@ -8,6 +8,9 @@ public class Fight_Win : FightUnit
     public override void Init()
     {
         base.Init();
+        // 关闭拖动路径 UI
+        UIManager.Instance.CloseUI("LineUI");
+        Cursor.visible = true;
         FightManager.Instance.StopAllCoroutines();
         //显示敌人回合提示
         UIManager.Instance.ShowTip("Victory", Color.yellow, delegate ()

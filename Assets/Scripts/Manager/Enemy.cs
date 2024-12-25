@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour
     {
         val += FightManager.Instance.ATKBuff;
    
-        if (Defend >= val)
+        if (Defend > val)
         {
             Defend-=val;
             //播放动画及音效
@@ -129,7 +129,7 @@ public class Enemy : MonoBehaviour
             val = val - Defend;
             Defend = 0;
             CurrentHp -= val;
-            if(CurrentHp < 0)
+            if(CurrentHp <= 0)
             {
                 CurrentHp = 0;
                 //播放死亡
