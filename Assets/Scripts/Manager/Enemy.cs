@@ -118,7 +118,11 @@ public class Enemy : MonoBehaviour
     {
         val += FightManager.Instance.ATKBuff;
    
+<<<<<<< HEAD
         if (Defend > val)
+=======
+        if (Defend >= val)
+>>>>>>> 3c6361cd8efdc39327dc4171c22830d48c2fb0d2
         {
             Defend-=val;
             //播放动画及音效

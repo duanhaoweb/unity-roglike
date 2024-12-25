@@ -107,6 +107,7 @@
     <Compile Include="Assets\Scripts\Data\GameConfigManager.cs" />
     <Compile Include="Assets\Resources\Map\Scripts\ButtonChange.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
+    <Compile Include="Assets\Resources\Map\Scripts\ButtonChange.cs" />
     <Compile Include="Assets\Scripts\Card\Item\FoodCard.cs" />
     <Compile Include="Assets\Scripts\Fight\Fight_Loss.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
