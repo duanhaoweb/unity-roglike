@@ -179,7 +179,7 @@ public class Enemy : MonoBehaviour
     {
         val += FightManager.Instance.ATKBuff;
 
-        if (Defend > val)
+        if (Defend >= val)
         {
             Defend -= val;
             //播放动画及音效
@@ -201,6 +201,10 @@ public class Enemy : MonoBehaviour
                 Destroy(gameObject, 1);
                 Destroy(actionObj);
                 Destroy(hpItemObj);
+                if (EnemyManager.Instance.enemyList.Count == 0)
+                {
+                    FightManager.Instance.ChangeType(FightType.Win);
+                }
             }
             else
             {

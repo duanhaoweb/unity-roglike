@@ -9,7 +9,7 @@ public class Fight_Win : FightUnit
     public override void Init()
     {
         base.Init();
-
+        Sleep(1);
         // ¹Ø±ÕÍÏ¶¯Â·¾¶ UI
         UIManager.Instance.CloseUI("LineUI");
         Cursor.visible = true;
