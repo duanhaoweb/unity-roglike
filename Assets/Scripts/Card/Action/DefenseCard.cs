@@ -21,7 +21,7 @@ public class DefenseCard : ActionCard
         if (UseCard() == true)
         {
             int armor = int.Parse(data["Arg1"]);
-            AudioManager.Instance.PlayEffect("defense");
+            AudioManager.Instance.PlayEffect("Defense");
 
 
 

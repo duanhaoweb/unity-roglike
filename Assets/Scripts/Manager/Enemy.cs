@@ -123,7 +123,7 @@ public class Enemy : MonoBehaviour
         {
             Defend-=val;
             //播放动画及音效
-            AudioManager.Instance.PlayEffect("Hurt");
+            AudioManager.Instance.PlayEffect("Hurt-Defense");
         }
         else
         {
@@ -133,8 +133,7 @@ public class Enemy : MonoBehaviour
             if(CurrentHp <= 0)
             {
                 CurrentHp = 0;
-                //播放死亡
-                AudioManager.Instance.PlayEffect("Die");
+
                 //敌人移除
                 EnemyManager.Instance.DeleteEnemy(this);
 
@@ -158,7 +157,7 @@ public class Enemy : MonoBehaviour
         if (hurt > 0)
         {
             FightManager.Instance.ATKBuff += hurt;
-            UIManager.Instance.ShowTip("攻击伤害提高！", Color.cyan);
+            //UIManager.Instance.ShowTip("攻击伤害提高！", Color.cyan);
             //UIManager.Instance.GetUI<FightUI>("FightUI").UpdateDefense();
 
         }
@@ -166,7 +165,7 @@ public class Enemy : MonoBehaviour
         {
             FightManager.Instance.CurrentHP += hurt;
             if (FightManager.Instance.CurrentHP < 0) FightManager.Instance.CurrentHP = 0;
-            UIManager.Instance.ShowTip("受到伤害！", Color.red);
+            //UIManager.Instance.ShowTip("受到伤害！", Color.red);
             UIManager.Instance.GetUI<FightUI>("FightUI").UpdateHp();
 
         }
@@ -183,7 +182,7 @@ public class Enemy : MonoBehaviour
         {
             Defend -= val;
             //播放动画及音效
-            AudioManager.Instance.PlayEffect("Hurt");
+            AudioManager.Instance.PlayEffect("Hurt-Defense");
         }
         else
         {
@@ -194,7 +193,7 @@ public class Enemy : MonoBehaviour
             {
                 CurrentHp = 0;
                 //播放死亡
-                AudioManager.Instance.PlayEffect("Die");
+                //AudioManager.Instance.PlayEffect("Die");
                 //敌人移除
                 EnemyManager.Instance.DeleteEnemy(this);
 
@@ -229,7 +228,7 @@ public class Enemy : MonoBehaviour
     public IEnumerator DoAction()
     {
         HideAction();
-        //播放怪物攻击动画
+
         //等待某一时间后执行对应的行为（都要配置到excel表）
         yield return new WaitForSeconds(0.5f);
         switch (type) 
@@ -238,13 +237,15 @@ public class Enemy : MonoBehaviour
                 break;
             case ActionType.Defend:
                 Defend += 5;
+                //播放动画及音效
+                AudioManager.Instance.PlayEffect("Defense");
                 UpdateDefend();
                 break;
             case ActionType.Attack:
                 //玩家扣血
                 FightManager.Instance.GetPlayerHit(Attack);
                 //摄像机微微颤抖
-                Camera.main.DOShakePosition(0.1f,0.2f,5,45);
+                Camera.main.DOShakePosition(0.2f,0.3f,5,45);
                 break;
         }
         //等待动画播放完毕

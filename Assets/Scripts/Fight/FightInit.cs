@@ -11,9 +11,10 @@ public class FightInit : FightUnit
         //战斗初始化数值
         FightManager.Instance.Init();
         // 切换 BGM
-        Debug.Log("切换 BGM：播放 'Attack' 音乐");
-        AudioManager.Instance.PlayBGM("Attack");
 
+        AudioManager.Instance.PlayBGM("AttackBGM");
+
+        AudioManager.Instance.PlayEffect("Battle-start");
         //敌人生成
         EnemyManager.Instance.LoadRes($"1000{levelIndex}");//读取关卡1的敌人信息
         levelIndex++;

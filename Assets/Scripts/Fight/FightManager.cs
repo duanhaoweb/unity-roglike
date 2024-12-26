@@ -96,12 +96,16 @@ public class FightManager : MonoBehaviour
         if(DefenseCount>=hit)
         {
             DefenseCount -= hit;
+            //播放动画及音效
+            AudioManager.Instance.PlayEffect("Hurt-Defense");
         }
         else
         {
             hit = hit - DefenseCount;
             DefenseCount = 0;
             CurrentHP -= hit;
+            //播放动画及音效
+            AudioManager.Instance.PlayEffect("Hurt");
             if ( CurrentHP<= 0)
             {
                 CurrentHP = 0;

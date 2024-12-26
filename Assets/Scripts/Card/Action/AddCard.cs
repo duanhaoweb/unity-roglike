@@ -27,7 +27,9 @@ public class AddCard : ActionCard
             if (val > 0)
             {
                 FightManager.Instance.DefenseCount += val;
-                UIManager.Instance.ShowTip("获得护盾！", Color.blue);
+                //UIManager.Instance.ShowTip("获得护盾！", Color.blue);
+                //播放动画及音效
+                AudioManager.Instance.PlayEffect("Defense");
                 UIManager.Instance.GetUI<FightUI>("FightUI").UpdateDefense();
 
             }
@@ -35,7 +37,9 @@ public class AddCard : ActionCard
             {
                 FightManager.Instance.CurrentHP += val;
                 if (FightManager.Instance.CurrentHP < 0) FightManager.Instance.CurrentHP = 0;
-                UIManager.Instance.ShowTip("受到伤害！", Color.red);
+                //UIManager.Instance.ShowTip("受到伤害！", Color.red);
+                //播放动画及音效
+                AudioManager.Instance.PlayEffect("Hurt");
                 UIManager.Instance.GetUI<FightUI>("FightUI").UpdateHp();
             }
 
@@ -45,7 +49,7 @@ public class AddCard : ActionCard
                 //抽对应的卡，建立对应数量的卡牌对象
                 UIManager.Instance.GetUI<FightUI>("FightUI").DrawCardItem(num);
                 UIManager.Instance.GetUI<FightUI>("FightUI").UpdateCardItemPos();
-                AudioManager.Instance.PlayEffect("AddCard");
+                //AudioManager.Instance.PlayEffect("AddCard");
 
                 //播放音效
                 //刷新护甲及文本

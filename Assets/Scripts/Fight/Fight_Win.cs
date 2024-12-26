@@ -9,7 +9,6 @@ public class Fight_Win : FightUnit
     public override void Init()
     {
         base.Init();
-        Sleep(1);
         // 关闭拖动路径 UI
         UIManager.Instance.CloseUI("LineUI");
         Cursor.visible = true;
@@ -21,6 +20,8 @@ public class Fight_Win : FightUnit
         {
             Debug.Log("Victory");
         });
+
+        AudioManager.Instance.PlayEffect("Victory");
         Sleep(1);
         UIManager.Instance.GetUI<FightUI>("FightUI").Close();
         // 显示选择页面
