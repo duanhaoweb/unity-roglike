@@ -15,35 +15,78 @@ public class EnemyManager
     /// <param name="id"></param>
     public void LoadRes(string id)
     {
-        enemyList = new List<Enemy>();
-        //Id	Name	EnemyIds	Pos
-        //10001	  1	     10001	  0,0,0
-        //读取关卡表
-        Dictionary<string,string> levelData =GameConfigManager.Instance.GetLevlById(id);
-        //敌人id信息
-        string[] enemyIds = levelData["EnemyIds"].Split('=');
+        Debug.Log($"[LoadRes] 开始加载关卡数据，关卡 ID: {id}");
 
-        string[] enemyPos = levelData["Pos"].Split('=');//敌人位置信息
-        for(int i = 0; i < enemyIds.Length; i++)
+        enemyList = new List<Enemy>();
+
+        // 读取关卡表
+        Dictionary<string, string> levelData = GameConfigManager.Instance.GetLevlById(id);
+        if (levelData == null)
+        {
+            Debug.LogError($"[LoadRes] 未找到关卡数据，关卡 ID: {id}");
+            return;
+        }
+        Debug.Log($"[LoadRes] 成功读取关卡数据: {string.Join(", ", levelData)}");
+
+        // 敌人 ID 信息
+        string[] enemyIds = levelData["EnemyIds"].Split('=');
+        Debug.Log($"[LoadRes] 敌人 ID 列表: {string.Join(", ", enemyIds)}");
+
+        // 敌人位置信息
+        string[] enemyPos = levelData["Pos"].Split('=');
+        Debug.Log($"[LoadRes] 敌人位置列表: {string.Join("; ", enemyPos)}");
+
+        for (int i = 0; i < enemyIds.Length; i++)
         {
             string enemyId = enemyIds[i];
-            string[] pos = enemyPos[i].Split(',');
+            Debug.Log($"[LoadRes] 正在处理敌人 ID: {enemyId}");
 
-            //敌人位置
+            string[] pos = enemyPos[i].Split(',');
+            if (pos.Length != 3)
+            {
+                Debug.LogError($"[LoadRes] 无效的位置数据: {enemyPos[i]}");
+                continue;
+            }
+
+            // 敌人位置
             float x = float.Parse(pos[0]);
             float y = float.Parse(pos[1]);
             float z = float.Parse(pos[2]);
-            //根据敌人id获得每个敌人的信息
-            Dictionary<string,string>enemyData=GameConfigManager.Instance.GetEnemyById(enemyId);
-            GameObject obj = Object.Instantiate(Resources.Load(enemyData["Model"])) as GameObject;//从资源路径加载对应的敌人模型
+            Debug.Log($"[LoadRes] 敌人位置: x={x}, y={y}, z={z}");
 
-            Enemy enemy = obj.AddComponent<Enemy>();//添加敌人脚本
-            enemy.Init(enemyData);//存储敌人信息
-            //存储到集合
+            // 根据敌人 ID 获取敌人信息
+            Dictionary<string, string> enemyData = GameConfigManager.Instance.GetEnemyById(enemyId);
+            if (enemyData == null)
+            {
+                Debug.LogError($"[LoadRes] 未找到敌人数据，敌人 ID: {enemyId}");
+                continue;
+            }
+            Debug.Log($"[LoadRes] 成功获取敌人数据: {string.Join(", ", enemyData)}");
+
+            // 加载敌人模型
+            GameObject prefab = Resources.Load(enemyData["Model"]) as GameObject;
+            if (prefab == null)
+            {
+                Debug.LogError($"[LoadRes] 无法加载敌人模型，路径: {enemyData["Model"]}");
+                continue;
+            }
+            GameObject obj = Object.Instantiate(prefab);
+            Debug.Log($"[LoadRes] 成功实例化敌人模型，路径: {enemyData["Model"]}");
+
+            // 添加敌人脚本
+            Enemy enemy = obj.AddComponent<Enemy>();
+            enemy.Init(enemyData); // 初始化敌人数据
+            Debug.Log($"[LoadRes] 敌人已初始化: {enemy}");
+
+            // 存储到敌人列表
             enemyList.Add(enemy);
             obj.transform.position = new Vector3(x, y, z);
+            Debug.Log($"[LoadRes] 敌人已添加到列表，并设置位置: x={x}, y={y}, z={z}");
         }
+
+        Debug.Log($"[LoadRes] 所有敌人加载完成，总计: {enemyList.Count} 个敌人");
     }
+
     public void DeleteEnemy(Enemy enemy)
     {
         enemyList.Remove(enemy);

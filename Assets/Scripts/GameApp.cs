@@ -21,8 +21,7 @@ public class GameApp : MonoBehaviour
         
         //²¥·ÅBGM
         AudioManager.Instance.PlayBGM("Start");
-        //test
-        string name = GameConfigManager.Instance.GetCardById("1002")["Id"];
+
 
     }
 

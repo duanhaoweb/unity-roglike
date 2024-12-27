@@ -22,7 +22,7 @@ public class FightManager : MonoBehaviour
     public FightUnit fightUnit; // 战斗单元
 
     public static int MaxHP=10;//最大血量
-    public int CurrentHP=0;//当前血量
+    public static int CurrentHP=10;//当前血量
 
     public int MaxPowerCount = 0;//最大卡牌费用（能量）
     public int CurrentPowerCount = 0;//当前能量
@@ -32,7 +32,6 @@ public class FightManager : MonoBehaviour
     
     public void Init()
     {
-        CurrentHP = 10;
         MaxPowerCount= 3;
         CurrentPowerCount = 3;
         DefenseCount = 0;

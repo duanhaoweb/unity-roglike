@@ -163,8 +163,8 @@ public class Enemy : MonoBehaviour
         }
         else if (hurt < 0)
         {
-            FightManager.Instance.CurrentHP += hurt;
-            if (FightManager.Instance.CurrentHP < 0) FightManager.Instance.CurrentHP = 0;
+            FightManager.CurrentHP += hurt;
+            if (FightManager.CurrentHP < 0) FightManager.CurrentHP = 0;
             //UIManager.Instance.ShowTip("ÊÜµ½ÉËº¦£¡", Color.red);
             UIManager.Instance.GetUI<FightUI>("FightUI").UpdateHp();
 

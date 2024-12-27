@@ -13,14 +13,10 @@ public class RoleManager
 
     public void Init()
     {
-        GameObject obj = Object.Instantiate(Resources.Load("Model/Player")) as GameObject;//从资源路径加载对应的人物模型
 
-        Player player = obj.AddComponent<Player>();//添加人物脚本
-
-        obj.transform.position = new Vector3(-5, 1, -6);//人物的位置
-        
+        CreatRole();
         //添加初始行动卡牌
-        
+
         int AttackCardCount = 5;
         int DenfenseCardCount = 5;
         
@@ -43,4 +39,13 @@ public class RoleManager
 
 
     }
+    public void CreatRole()
+    {
+        GameObject obj = Object.Instantiate(Resources.Load("Model/Player")) as GameObject;//从资源路径加载对应的人物模型
+
+        Player player = obj.AddComponent<Player>();//添加人物脚本
+
+        obj.transform.position = new Vector3(-5, 1, -6);//人物的位置
+    }
+
 }

@@ -35,8 +35,8 @@ public class AddCard : ActionCard
             }
             else if (val < 0)
             {
-                FightManager.Instance.CurrentHP += val;
-                if (FightManager.Instance.CurrentHP < 0) FightManager.Instance.CurrentHP = 0;
+                FightManager.CurrentHP += val;
+                if (FightManager.CurrentHP < 0) FightManager.CurrentHP = 0;
                 //UIManager.Instance.ShowTip("受到伤害！", Color.red);
                 //播放动画及音效
                 AudioManager.Instance.PlayEffect("Hurt");

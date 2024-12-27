@@ -25,8 +25,9 @@ public class LoginUI : UIBase
     {
 
         Close();
-        //战斗初始化
-        FightManager.Instance.ChangeType(FightType.Init);
+
+        //显示loginUI,创建的脚本名字记得跟预制体物体的名字一样
+        UIManager.Instance.ShowUI<Text1UI>("Text1UI");
 
 
     }

@@ -56,8 +56,8 @@ public class FightUI : UIBase
     public void UpdateHp()
     {
         var fightManager = FightManager.Instance;
-        hpTxT.text = $"{fightManager.CurrentHP}/{FightManager.MaxHP}";
-        hpImg.fillAmount = (float)fightManager.CurrentHP / FightManager.MaxHP;
+        hpTxT.text = $"{FightManager.CurrentHP}/{FightManager.MaxHP}";
+        hpImg.fillAmount = (float)FightManager.CurrentHP / FightManager.MaxHP;
     }
 
     // 更新能量显示

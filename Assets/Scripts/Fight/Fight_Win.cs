@@ -9,6 +9,7 @@ public class Fight_Win : FightUnit
     public override void Init()
     {
         base.Init();
+        int i = FightInit.levelIndex;
         // 关闭拖动路径 UI
         UIManager.Instance.CloseUI("LineUI");
         Cursor.visible = true;
@@ -25,8 +26,12 @@ public class Fight_Win : FightUnit
         Sleep(1);
         UIManager.Instance.GetUI<FightUI>("FightUI").Close();
         // 显示选择页面
-
+        if(i!=4)
         UIManager.Instance.ShowUI<SelectCardUI>("SelectCardUI");
+        else
+        {
+            UIManager.Instance.ShowUI<Text2UI>("Text2UI");
+        }
     }
     public override void OnUpdate()
     {

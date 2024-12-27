@@ -22,10 +22,10 @@ public class HealCard : ActionCard
         {
             int heal = int.Parse(data["Arg1"]);//Arg1代表对自己的数值
 
-            FightManager.Instance.CurrentHP += heal;
-            if (FightManager.Instance.CurrentHP >= FightManager.MaxHP)
+            FightManager.CurrentHP += heal;
+            if (FightManager.CurrentHP >= FightManager.MaxHP)
             {
-                FightManager.Instance.CurrentHP = FightManager.MaxHP;
+                FightManager.CurrentHP = FightManager.MaxHP;
             }
             AudioManager.Instance.PlayEffect("Heal");
             UIManager.Instance.ShowTip("生命恢复！", Color.green);

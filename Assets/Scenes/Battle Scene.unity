@@ -838,11 +838,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af352ebf2e3af34f88974cce861fc87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 0
   CurrentHP: 0
   MaxPowerCount: 0
   CurrentPowerCount: 0
-  DenfenseCount: 0
+  DefenseCount: 0
   ATKBuff: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

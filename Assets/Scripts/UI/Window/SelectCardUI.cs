@@ -8,15 +8,16 @@ public class SelectCardUI : UIBase
 {
     private void Awake()
     {
-        var gameButton1 = Register("content/Btn1");
-        var gameButton2 = Register("content/Btn2");
-        var gameButton3 = Register("content/Btn3");
+        int i = FightInit.levelIndex;
+        //var gameButton1 = Register("content/Btn1");
+        var gameButton2 = Register("content/Btn1");
+        //var gameButton3 = Register("content/Btn3");
         var gameReturnButton = Register("content/returnBtn");
 
         // 绑定事件处理方法
-        gameButton1.OnClick = onStartGameBtn1;
-        gameButton1.OnClick = onStartGameBtn2;
-        gameButton1.OnClick = onStartGameBtn3;
+        //gameButton1.OnClick = onStartGameBtn1;
+        gameButton2.OnClick = onStartGameBtn2;
+        //gameButton1.OnClick = onStartGameBtn3;
         gameReturnButton.OnClick = onReturnGameBtn;
     }
 
@@ -35,6 +36,9 @@ public class SelectCardUI : UIBase
         Close();
 
         FightManager.MaxHP += 5;
+        FightManager.CurrentHP += 5;
+        //战斗初始化
+        FightManager.Instance.ChangeType(FightType.Init);
         //进入地图页面
         // UIManager.Instance.ShowUI<FightUI>("FightUI");
     }
@@ -51,6 +55,8 @@ public class SelectCardUI : UIBase
     {
 
         Close();
+        //战斗初始化
+        FightManager.Instance.ChangeType(FightType.Init);
         //进入地图页面
         // UIManager.Instance.ShowUI<FightUI>("FightUI");
     }
